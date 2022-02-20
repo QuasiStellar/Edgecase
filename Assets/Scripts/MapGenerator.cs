@@ -14,6 +14,7 @@ public class MapGenerator : MonoBehaviour
             {
                 if (Math.Abs(i - j) >= Size) continue;
                 var hex = new Hex(i, j, Hex.GetRandomHeight());
+                hex.SetParent(transform);
                 hex.UpdateColor();
                 map[i, j] = hex;
             }

@@ -108,4 +108,9 @@ public class Hex
     {
         return Random.Range(0, HeightVariation);
     }
+
+    public void SetParent(Transform parent)
+    {
+        _hexGameObject.transform.parent = parent;
+    }
 }
