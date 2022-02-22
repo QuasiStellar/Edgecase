@@ -5,6 +5,9 @@ public class MapGenerator : MonoBehaviour
 {
     private const int MapSize = 10;
 
+    public GameObject freeCamera;
+    public GameObject topDownCamera;
+
     private void Start()
     {
         var map = new Hex[MapSize * 2 - 1, MapSize * 2 - 1];
@@ -23,5 +26,8 @@ public class MapGenerator : MonoBehaviour
                 map[i, j] = hex;
             }
         }
+
+        freeCamera.transform.position = new Vector3(0, MapSize * Hex.HexSize, - MapSize * Hex.HexSize * 0.75f);
+        topDownCamera.GetComponent<Camera>().orthographicSize = MapSize * Hex.HexSize * 0.8f;
     }
 }

@@ -28,52 +28,43 @@ public class FreeCamera : MonoBehaviour
 
     /// Set to true when free looking (on right mouse button).
     private bool _looking;
-
-    public GameObject cam;
-
-    private void Start()
-    {
-        var cameraTransform = transform;
-        cameraTransform.position = cam.transform.position;
-        cameraTransform.rotation = cam.transform.rotation;
-    }
-
+    
     private void Update()
     {
         var fastMode = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
         var movementSpeed = fastMode ? FastMovementSpeed : MovementSpeed;
-        var deltaTransform = new Vector3();
+        var dPosition = Vector3.zero;
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            deltaTransform += -transform.right * (movementSpeed * Time.deltaTime);
+            dPosition += -transform.right * (movementSpeed * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            deltaTransform += transform.right * (movementSpeed * Time.deltaTime);
+            dPosition += transform.right * (movementSpeed * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
             var forward = transform.forward;
-            deltaTransform += new Vector3(forward.x, 0, forward.z) * (movementSpeed * Time.deltaTime);
+            dPosition += new Vector3(forward.x, 0, forward.z) * (movementSpeed * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
             var forward = transform.forward;
-            deltaTransform += -new Vector3(forward.x, 0, forward.z) * (movementSpeed * Time.deltaTime);
+            dPosition += -new Vector3(forward.x, 0, forward.z) * (movementSpeed * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.Space))
         {
-            deltaTransform += Vector3.up * (movementSpeed * Time.deltaTime);
+            dPosition += Vector3.up * (movementSpeed * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
-            deltaTransform += Vector3.down * (movementSpeed * Time.deltaTime);
+            dPosition += Vector3.down * (movementSpeed * Time.deltaTime);
         }
 
         if (_looking)
@@ -86,13 +77,13 @@ public class FreeCamera : MonoBehaviour
         }
 
         var axis = Input.GetAxis("Mouse ScrollWheel");
-        if (Math.Abs(Math.Abs(axis)) > Tolerance)
+        if (Math.Abs(axis) > Tolerance)
         {
             var zoomSensitivity = fastMode ? FastZoomSensitivity : ZoomSensitivity;
-            deltaTransform = transform.forward * (axis * zoomSensitivity);
+            dPosition = transform.forward * (axis * zoomSensitivity);
         }
 
-        transform.position += deltaTransform;
+        transform.position += dPosition;
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
