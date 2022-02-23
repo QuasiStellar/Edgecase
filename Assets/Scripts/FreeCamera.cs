@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 
 /// Keys:
+/// q               - switch cameras
 ///	wasd / arrows	- movement
 ///	space / shift	- up/down
 ///	hold control	- enable fast movement mode
@@ -28,7 +29,7 @@ public class FreeCamera : MonoBehaviour
 
     /// Set to true when free looking (on right mouse button).
     private bool _looking;
-    
+
     private void Update()
     {
         var fastMode = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
