@@ -16,6 +16,9 @@ public class Hex
 
     private const int HeightVariation = 4;
     private const int StairHeight = 3;
+    private const int HeightUnderZero = 0;
+    
+    private const int LowerY = HeightUnderZero * StairHeight;
 
     private static readonly Dictionary<int, Color> ColorMap = new Dictionary<int, Color>
     {
@@ -33,7 +36,9 @@ public class Hex
         _aPos = aPos;
         _bPos = bPos;
         _height = height;
-        
+
+        var upperY = height * StairHeight;
+
         _hexGameObject = new GameObject("Hex");
         _hexGameObject.AddComponent<MeshRenderer>().material = Resources.Load<Material>("HexMaterial");
         _hexGameObject.AddComponent<MeshFilter>().mesh = new Mesh
@@ -41,20 +46,20 @@ public class Hex
             vertices = new[]
             {
                 // Upper plane
-                new Vector3(0, height * StairHeight, HexSize / 2),
-                new Vector3(HexSize * Sqrt3By4, height * StairHeight, HexSize / 4),
-                new Vector3(HexSize * Sqrt3By4, height * StairHeight, - HexSize / 4),
-                new Vector3(0, height * StairHeight, - HexSize / 2),
-                new Vector3(- HexSize * Sqrt3By4, height * StairHeight, - HexSize / 4),
-                new Vector3(- HexSize * Sqrt3By4, height * StairHeight, HexSize / 4),
+                new Vector3(0,                    upperY, HexSize / 2),
+                new Vector3(HexSize * Sqrt3By4,   upperY, HexSize / 4),
+                new Vector3(HexSize * Sqrt3By4,   upperY, - HexSize / 4),
+                new Vector3(0,                    upperY, - HexSize / 2),
+                new Vector3(- HexSize * Sqrt3By4, upperY, - HexSize / 4),
+                new Vector3(- HexSize * Sqrt3By4, upperY, HexSize / 4),
                 
                 // Lower plane
-                new Vector3(0, 0, HexSize / 2),
-                new Vector3(HexSize * Sqrt3By4, 0, HexSize / 4),
-                new Vector3(HexSize * Sqrt3By4, 0, - HexSize / 4),
-                new Vector3(0, 0, - HexSize / 2),
-                new Vector3(- HexSize * Sqrt3By4, 0, - HexSize / 4),
-                new Vector3(- HexSize * Sqrt3By4, 0, HexSize / 4)
+                new Vector3(0,                    LowerY, HexSize / 2),
+                new Vector3(HexSize * Sqrt3By4,   LowerY, HexSize / 4),
+                new Vector3(HexSize * Sqrt3By4,   LowerY, - HexSize / 4),
+                new Vector3(0,                    LowerY, - HexSize / 2),
+                new Vector3(- HexSize * Sqrt3By4, LowerY, - HexSize / 4),
+                new Vector3(- HexSize * Sqrt3By4, LowerY, HexSize / 4)
             },
             triangles = new[]
             {
@@ -85,18 +90,18 @@ public class Hex
             },
             uv = new[] //TODO: substitute this with some clever shader #1
             {
-                new Vector2(0.5f, 1/6f + 0.01f),
+                new Vector2(0.5f,          1/6f + 0.01f),
                 new Vector2(0.75f - 0.01f, 1/3f + 0.01f),
                 new Vector2(0.75f - 0.01f, 2/3f - 0.01f),
-                new Vector2(0.5f, 5/6f - 0.01f),
+                new Vector2(0.5f,          5/6f - 0.01f),
                 new Vector2(0.25f + 0.01f, 2/3f - 0.01f),
                 new Vector2(0.25f + 0.01f, 1/3f + 0.01f),
-                new Vector2(0.5f, 0),
-                new Vector2(1, 1/6f),
-                new Vector2(1, 5/6f),
-                new Vector2(0.5f, 1),
-                new Vector2(0, 5/6f),
-                new Vector2(0, 1/6f)
+                new Vector2(0.5f,          0),
+                new Vector2(1,             1/6f),
+                new Vector2(1,             5/6f),
+                new Vector2(0.5f,          1),
+                new Vector2(0,             5/6f),
+                new Vector2(0,             1/6f)
             }
         };
         _hexGameObject.GetComponent<Transform>().position = new Vector3(
