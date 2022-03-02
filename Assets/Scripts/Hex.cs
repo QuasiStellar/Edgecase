@@ -13,8 +13,7 @@ public class Hex
 
     private const float Sqrt3By2 = 0.866025403784439f; // Mathf.Pow(3, 0.5f) / 2
     private const float Sqrt3By4 = 0.433012701892219f; // Mathf.Pow(3, 0.5f) / 4
-
-    private const int HeightVariation = 4;
+    
     private const int StairHeight = 3;
     private const int HeightUnderZero = 0;
     
@@ -115,12 +114,7 @@ public class Hex
     {
         _hexGameObject.GetComponent<MeshRenderer>().material.color = ColorMap[_height];
     }
-
-    public static int GetRandomHeight()
-    {
-        return Random.Range(0, HeightVariation);
-    }
-
+    
     public void SetParent(Transform parent)
     {
         _hexGameObject.transform.parent = parent;
