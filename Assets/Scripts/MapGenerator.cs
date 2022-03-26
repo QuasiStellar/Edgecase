@@ -8,9 +8,11 @@ public class MapGenerator : MonoBehaviour
     public const int MapSize = 5;
     public const int TriangleSize = 5;
     public const float HexSize = 10;
+    public const int StairHeight = 3;
 
-    private const float Smoothness = 7f;
-    private const int HeightVariation = 7;
+    public const float Smoothness = 7f;
+    public const int HeightVariation = 7;
+
     private static int _noiseShift;
 
     public GameObject freeCamera;
@@ -25,10 +27,15 @@ public class MapGenerator : MonoBehaviour
             for (var j = 0; j < MapSize * 2 - 1; j++)
             {
                 if (Math.Abs(i - j) >= MapSize) continue;
-                int aPos = i - MapSize + 1;
-                int bPos = j - MapSize + 1;
-                mesh.SetHeight(aPos, bPos, (int) (Mathf.PerlinNoise((aPos / Smoothness) + _noiseShift,
-                    (bPos / Smoothness) + _noiseShift) * HeightVariation));
+                var aPos = i - MapSize + 1;
+                var bPos = j - MapSize + 1;
+                var height = (int) (Mathf.PerlinNoise((aPos / Smoothness) + _noiseShift,
+                    (bPos / Smoothness) + _noiseShift) * HeightVariation);
+                if (height >= HeightVariation)
+                    height = HeightVariation - 1;
+                else if (height < 0)
+                    height = 0;
+                mesh.SetHeight(aPos, bPos, height);
             }
         }
 
