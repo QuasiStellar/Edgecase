@@ -6,7 +6,6 @@ using Random = UnityEngine.Random;
 public class MapGenerator : MonoBehaviour
 {
     public const int MapSize = 5;
-    public const int TriangleSize = 5;
     public const float HexSize = 10;
     public const int StairHeight = 3;
 

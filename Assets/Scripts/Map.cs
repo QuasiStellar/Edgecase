@@ -8,7 +8,6 @@ public class Map
 
     private const float HexSize = MapGenerator.HexSize;
     private const int MapSize = MapGenerator.MapSize;
-    private const int TriangleSize = MapGenerator.TriangleSize;
     private const int StairHeight = MapGenerator.StairHeight;
 
     private const float Sqrt3By2 = 0.866025403784439f; // Mathf.Pow(3, 0.5f) / 2
@@ -54,9 +53,6 @@ public class Map
 
                 var coordinateShiftAPos = (aPos - bPos / 2f) * HexSize * Sqrt3By2;
                 var coordinateShiftBPos = bPos * HexSize * 3 / 4;
-                coordinateShiftAPos += aPos * TriangleSize;
-                coordinateShiftBPos += bPos * TriangleSize * Sqrt3By2;
-                coordinateShiftAPos -= bPos * (TriangleSize / 2f);
 
                 verticesList.AddRange(new[]
                 {
@@ -105,44 +101,6 @@ public class Map
                 if (Math.Abs(i - j) >= MapSize) continue;
                 var verticesShiftGrowing = (MapSize + 1) * 6 + (hexCounter + i) * 6;
                 var verticesShiftDecreasing = (MapSize + 1) * 6 + (hexCounter - i + (MapSize * 2 - 3)) * 6;
-
-                // Creating up-down triangles
-                if (j + 1 < 2 * MapSize - 1 && i < 2 * MapSize - 2 && Math.Abs(i - (j + 1)) < MapSize)
-                {
-                    if (i < MapSize - 1)
-                        trianglesList.AddRange(new[]
-                        {
-                            0 + hexCounter * 6,
-                            8 + hexCounter * 6,
-                            4 + verticesShiftGrowing
-                        });
-                    else
-                        trianglesList.AddRange(new[]
-                        {
-                            0 + hexCounter * 6,
-                            8 + hexCounter * 6,
-                            4 + verticesShiftDecreasing
-                        });
-                }
-
-                // Creating upright triangles
-                if (j + 1 < 2 * MapSize - 1 && i < 2 * MapSize - 2 && Math.Abs((i + 1) - j) < MapSize)
-                {
-                    if (i < MapSize - 1)
-                        trianglesList.AddRange(new[]
-                        {
-                            1 + hexCounter * 6,
-                            3 + verticesShiftGrowing,
-                            -1 + verticesShiftGrowing
-                        });
-                    else
-                        trianglesList.AddRange(new[]
-                        {
-                            1 + hexCounter * 6,
-                            3 + verticesShiftDecreasing,
-                            -1 + verticesShiftDecreasing
-                        });
-                }
 
                 // Creating quadrilateral
                 if (j + 1 < 2 * MapSize - 1 && Math.Abs(i - (j + 1)) < MapSize)
