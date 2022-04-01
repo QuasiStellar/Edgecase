@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Map
+public class HexMap
 {
     private readonly GameObject _hexGameObject;
 
@@ -17,9 +17,9 @@ public class Map
 
     private const int LowerY = HeightUnderZero * StairHeight;
 
-    public Map(Carcass carcass)
+    public HexMap(Carcass carcass)
     {
-        _hexGameObject = new GameObject("Hex");
+        _hexGameObject = new GameObject("HexMap");
         _hexGameObject.AddComponent<MeshRenderer>().material = Resources.Load<Material>("HexMaterial");
 
         var verticesList = new List<Vector3>();
