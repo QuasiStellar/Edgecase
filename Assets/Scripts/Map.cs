@@ -17,17 +17,6 @@ public class Map
 
     private const int LowerY = HeightUnderZero * StairHeight;
 
-    private static readonly Dictionary<int, Color> ColorMap = new Dictionary<int, Color>
-    {
-        {0, new Color(1, 0, 0)},
-        {1, new Color(1, 0.5f, 0)},
-        {2, new Color(1, 1, 0)},
-        {3, new Color(0, 1, 0)},
-        {4, new Color(0, 1, 1)},
-        {5, new Color(0, 0, 1)},
-        {6, new Color(1, 0, 1)}
-    };
-
     public Map(Carcass carcass)
     {
         _hexGameObject = new GameObject("Hex");
@@ -174,7 +163,5 @@ public class Map
             triangles = trianglesList.ToArray(),
             uv = uvList.ToArray(),
         };
-
-        _hexGameObject.GetComponent<MeshRenderer>().material.color = ColorMap[3];
     }
 }
