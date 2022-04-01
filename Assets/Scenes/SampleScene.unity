@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 796347559}
   - component: {fileID: 796347560}
   m_Layer: 0
-  m_Name: MapGenerator
+  m_Name: Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -282,7 +282,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &796347560
 MonoBehaviour:
@@ -473,5 +473,5 @@ Transform:
   - {fileID: 963194228}
   - {fileID: 640206940}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
