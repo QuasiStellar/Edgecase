@@ -3,7 +3,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 
-public class MapGenerator : MonoBehaviour
+public class Game : MonoBehaviour
 {
     public const int MapSize = 5;
     public const float HexSize = 10;

@@ -6,9 +6,9 @@ public class Map
 {
     private readonly GameObject _hexGameObject;
 
-    private const float HexSize = MapGenerator.HexSize;
-    private const int MapSize = MapGenerator.MapSize;
-    private const int StairHeight = MapGenerator.StairHeight;
+    private const float HexSize = Game.HexSize;
+    private const int MapSize = Game.MapSize;
+    private const int StairHeight = Game.StairHeight;
 
     private const float Sqrt3By2 = 0.866025403784439f; // Mathf.Pow(3, 0.5f) / 2
     private const float Sqrt3By4 = 0.433012701892219f; // Mathf.Pow(3, 0.5f) / 4
