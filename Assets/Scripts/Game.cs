@@ -38,7 +38,9 @@ public class Game : MonoBehaviour
             }
         }
 
-        freeCamera.transform.position = new Vector3(0, MapSize * Hex.HexSize, - MapSize * Hex.HexSize * 0.75f);
-        topDownCamera.GetComponent<Camera>().orthographicSize = MapSize * Hex.HexSize * 0.8f;
+        var map = new HexMap(mesh);
+
+        freeCamera.transform.position = new Vector3(0, MapSize * HexSize, -MapSize * HexSize * 0.75f);
+        topDownCamera.GetComponent<Camera>().orthographicSize = MapSize * HexSize * 0.8f;
     }
 }
