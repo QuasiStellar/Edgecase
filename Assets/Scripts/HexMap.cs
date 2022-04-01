@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HexMap
 {
-    private readonly GameObject _hexGameObject;
+    private readonly GameObject _hexMapGameObject;
 
     private const float HexSize = Game.HexSize;
     private const int MapSize = Game.MapSize;
@@ -17,15 +17,15 @@ public class HexMap
 
     private const int LowerY = HeightUnderZero * StairHeight;
 
-    public HexMap(Carcass carcass)
+    public HexMap(int[,] heightMap)
     {
-        _hexGameObject = new GameObject("HexMap");
-        _hexGameObject.AddComponent<MeshRenderer>().material = Resources.Load<Material>("HexMaterial");
+        _hexMapGameObject = new GameObject("HexMap");
+        _hexMapGameObject.AddComponent<MeshRenderer>().material = Resources.Load<Material>("HexMaterial");
 
         var verticesList = new List<Vector3>();
         var trianglesList = new List<int>();
         var uvList = new List<Vector2>();
-        var verticesCounter = 0;
+        var vertexCounter = 0;
 
         // Creating hexes
         for (var i = 0; i < 2 * MapSize - 1; i++)
@@ -37,47 +37,41 @@ public class HexMap
                 var aPos = i - MapSize + 1;
                 var bPos = j - MapSize + 1;
 
-                var height = carcass.GetHeight(aPos, bPos);
+                var height = heightMap[aPos + MapSize - 1, bPos + MapSize - 1];
                 var upperY = height * StairHeight;
 
-                var coordinateShiftAPos = (aPos - bPos / 2f) * HexSize * Sqrt3By2;
-                var coordinateShiftBPos = bPos * HexSize * 3 / 4;
+                var shiftAPos = (aPos - bPos / 2f) * HexSize * Sqrt3By2;
+                var shiftBPos = bPos * HexSize * 3 / 4;
 
                 verticesList.AddRange(new[]
                 {
-                    new Vector3(coordinateShiftAPos + 0, upperY,
-                        coordinateShiftBPos + HexSize / 2),
-                    new Vector3(coordinateShiftAPos + HexSize * Sqrt3By4, upperY,
-                        coordinateShiftBPos + HexSize / 4),
-                    new Vector3(coordinateShiftAPos + HexSize * Sqrt3By4, upperY,
-                        coordinateShiftBPos - HexSize / 4),
-                    new Vector3(coordinateShiftAPos + 0, upperY,
-                        coordinateShiftBPos - HexSize / 2),
-                    new Vector3(coordinateShiftAPos - HexSize * Sqrt3By4, upperY,
-                        coordinateShiftBPos - HexSize / 4),
-                    new Vector3(coordinateShiftAPos - HexSize * Sqrt3By4, upperY,
-                        coordinateShiftBPos + HexSize / 4)
+                    new Vector3(shiftAPos + 0,                  upperY, shiftBPos + HexSize / 2),
+                    new Vector3(shiftAPos + HexSize * Sqrt3By4, upperY, shiftBPos + HexSize / 4),
+                    new Vector3(shiftAPos + HexSize * Sqrt3By4, upperY, shiftBPos - HexSize / 4),
+                    new Vector3(shiftAPos + 0,                  upperY, shiftBPos - HexSize / 2),
+                    new Vector3(shiftAPos - HexSize * Sqrt3By4, upperY, shiftBPos - HexSize / 4),
+                    new Vector3(shiftAPos - HexSize * Sqrt3By4, upperY, shiftBPos + HexSize / 4)
                 });
 
                 trianglesList.AddRange(new[]
                 {
-                    0 + verticesCounter, 1 + verticesCounter, 2 + verticesCounter,
-                    0 + verticesCounter, 2 + verticesCounter, 3 + verticesCounter,
-                    0 + verticesCounter, 3 + verticesCounter, 5 + verticesCounter,
-                    3 + verticesCounter, 4 + verticesCounter, 5 + verticesCounter
+                    0 + vertexCounter, 1 + vertexCounter, 2 + vertexCounter,
+                    0 + vertexCounter, 2 + vertexCounter, 3 + vertexCounter,
+                    0 + vertexCounter, 3 + vertexCounter, 5 + vertexCounter,
+                    3 + vertexCounter, 4 + vertexCounter, 5 + vertexCounter
                 });
 
                 uvList.AddRange(new[]
                 {
-                    new Vector2(0.5f, 1 / 6f + 0.01f),
+                    new Vector2(0.5f,          1 / 6f + 0.01f),
                     new Vector2(0.75f - 0.01f, 1 / 3f + 0.01f),
                     new Vector2(0.75f - 0.01f, 2 / 3f - 0.01f),
-                    new Vector2(0.5f, 5 / 6f - 0.01f),
+                    new Vector2(0.5f,          5 / 6f - 0.01f),
                     new Vector2(0.25f + 0.01f, 2 / 3f - 0.01f),
                     new Vector2(0.25f + 0.01f, 1 / 3f + 0.01f)
                 });
 
-                verticesCounter += 6;
+                vertexCounter += 6;
             }
         }
 
@@ -157,7 +151,7 @@ public class HexMap
             }
         }
 
-        _hexGameObject.AddComponent<MeshFilter>().mesh = new Mesh
+        _hexMapGameObject.AddComponent<MeshFilter>().mesh = new Mesh
         {
             vertices = verticesList.ToArray(),
             triangles = trianglesList.ToArray(),
