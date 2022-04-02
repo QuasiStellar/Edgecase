@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class Game : MonoBehaviour
+public class GameController : MonoBehaviour
 {
     private const int MapSize = 10;
     private const int HexSize = 10;
