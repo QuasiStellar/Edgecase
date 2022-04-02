@@ -154,6 +154,8 @@ public static class HexMapGenerator
             uv = uvList.ToArray(),
         };
 
+        mapGameObject.AddComponent<HexMapController>();
+
         return mapGameObject;
     }
 }
