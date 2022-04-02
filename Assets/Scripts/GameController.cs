@@ -7,9 +7,6 @@ public class GameController : MonoBehaviour
     private const float HexSize = 10;
     private const int StairHeight = 8;
 
-    private const float Smoothness = 7f;
-    private const int HeightVariation = 7;
-
     public GameObject freeCamera;
     public GameObject topDownCamera;
 
@@ -19,8 +16,6 @@ public class GameController : MonoBehaviour
     {
         hexMap = HexMapGenerator.HexMap(
             MapSize,
-            Smoothness,
-            HeightVariation,
             HexSize,
             StairHeight,
             new PerlinHeightMapGenerator()

@@ -9,13 +9,11 @@ public static class HexMapGenerator
 
     public static GameObject HexMap(
         int mapSize,
-        float smoothness,
-        int heightVariation,
         float hexSize,
         int stairHeight,
         HeightMapGenerator heightMapGenerator)
     {
-        var heightMap = heightMapGenerator.HeightMap(mapSize, smoothness, heightVariation);
+        var heightMap = heightMapGenerator.HeightMap(mapSize);
         var mapGameObject = new GameObject("HexMap");
         mapGameObject.AddComponent<MeshRenderer>().material = Resources.Load<Material>("HexMaterial");
 
