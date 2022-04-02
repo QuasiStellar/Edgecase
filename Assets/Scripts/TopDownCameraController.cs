@@ -5,7 +5,7 @@ using UnityEngine;
 /// q               - switch cameras
 ///	wasd / arrows	- movement
 /// mouse wheel     - scale
-public class TopDownCamera : MonoBehaviour
+public class TopDownCameraController : MonoBehaviour
 {
     private const float Tolerance = 0.001f;
 

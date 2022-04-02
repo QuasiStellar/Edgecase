@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CameraSwitcher : MonoBehaviour
+public class CameraSwitcherController : MonoBehaviour
 {
     public GameObject freeCamera;
     public GameObject topDownCamera;
