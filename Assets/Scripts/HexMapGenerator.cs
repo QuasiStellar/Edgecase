@@ -9,9 +9,9 @@ public static class HexMapGenerator
 
     public static GameObject HexMap(
         int mapSize,
-        int smoothness,
+        float smoothness,
         int heightVariation,
-        int hexSize,
+        float hexSize,
         int stairHeight,
         HeightMapGenerator heightMapGenerator)
     {
