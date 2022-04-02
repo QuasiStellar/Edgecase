@@ -12,9 +12,10 @@ public static class HexMapGenerator
         int smoothness,
         int heightVariation,
         int hexSize,
-        int stairHeight)
+        int stairHeight,
+        HeightMapGenerator heightMapGenerator)
     {
-        var heightMap = HeightMapGenerator.HeightMap(mapSize, smoothness, heightVariation);
+        var heightMap = heightMapGenerator.HeightMap(mapSize, smoothness, heightVariation);
         var mapGameObject = new GameObject("HexMap");
         mapGameObject.AddComponent<MeshRenderer>().material = Resources.Load<Material>("HexMaterial");
 

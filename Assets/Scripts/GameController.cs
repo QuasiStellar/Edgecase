@@ -22,7 +22,8 @@ public class GameController : MonoBehaviour
             Smoothness,
             HeightVariation,
             HexSize,
-            StairHeight
+            StairHeight,
+            new PerlinHeightMapGenerator()
         );
 
         freeCamera.transform.position = new Vector3(0, MapSize * HexSize, -MapSize * HexSize * 0.75f);
