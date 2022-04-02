@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public static class HexMapGenerator
 {
-    private const int NoiseShiftMin = 10000;
-    private const int NoiseShiftMax = 100000;
-    
     private const float Sqrt3By2 = 0.866025403784439f; // Mathf.Pow(3, 0.5f) / 2
     private const float Sqrt3By4 = 0.433012701892219f; // Mathf.Pow(3, 0.5f) / 4
 
-    public static GameObject GenerateMapGameObject(
+    public static GameObject HexMap(
         int mapSize,
         int smoothness,
         int heightVariation,
         int hexSize,
         int stairHeight)
     {
-        var heightMap = GenerateHeightMap(mapSize, smoothness, heightVariation);
+        var heightMap = HeightMapGenerator.HeightMap(mapSize, smoothness, heightVariation);
         var mapGameObject = new GameObject("HexMap");
         mapGameObject.AddComponent<MeshRenderer>().material = Resources.Load<Material>("HexMaterial");
 
@@ -159,29 +155,5 @@ public static class HexMapGenerator
         };
 
         return mapGameObject;
-    }
-
-    private static int[,] GenerateHeightMap(int mapSize, float smoothness, int heightVariation)
-    {
-        var heightMap = new int[mapSize * 2 - 1, mapSize * 2 - 1];
-        var noiseShift = Random.Range(NoiseShiftMin, NoiseShiftMax);
-        for (var i = 0; i < mapSize * 2 - 1; i++)
-        {
-            for (var j = 0; j < mapSize * 2 - 1; j++)
-            {
-                if (Math.Abs(i - j) >= mapSize) continue;
-                var aPos = i - mapSize + 1;
-                var bPos = j - mapSize + 1;
-                var height = (int)(Mathf.PerlinNoise((aPos / smoothness) + noiseShift,
-                    (bPos / smoothness) + noiseShift) * heightVariation);
-                if (height >= heightVariation)
-                    height = heightVariation - 1;
-                else if (height < 0)
-                    height = 0;
-                heightMap[aPos + mapSize - 1, bPos + mapSize - 1] = height;
-            }
-        }
-
-        return heightMap;
     }
 }

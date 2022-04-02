@@ -13,17 +13,17 @@ public class Game : MonoBehaviour
     public GameObject freeCamera;
     public GameObject topDownCamera;
 
-    private HexMap hexMap;
+    private GameObject hexMap;
 
     private void Start()
     {
-        hexMap = new HexMap(HexMapGenerator.GenerateMapGameObject(
+        hexMap = HexMapGenerator.HexMap(
             MapSize,
             Smoothness,
             HeightVariation,
             HexSize,
             StairHeight
-        ));
+        );
 
         freeCamera.transform.position = new Vector3(0, MapSize * HexSize, -MapSize * HexSize * 0.75f);
         topDownCamera.GetComponent<Camera>().orthographicSize = MapSize * HexSize * 0.8f;
