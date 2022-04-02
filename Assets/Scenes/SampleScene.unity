@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 1086744195}
   - component: {fileID: 1086744194}
   m_Layer: 0
-  m_Name: CameraSwitcher
+  m_Name: CameraSwitch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
