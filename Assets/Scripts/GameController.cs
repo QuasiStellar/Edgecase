@@ -4,10 +4,10 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     private const int MapSize = 10;
-    private const int HexSize = 10;
+    private const float HexSize = 10;
     private const int StairHeight = 8;
 
-    private const int Smoothness = 7;
+    private const float Smoothness = 7f;
     private const int HeightVariation = 7;
 
     public GameObject freeCamera;
