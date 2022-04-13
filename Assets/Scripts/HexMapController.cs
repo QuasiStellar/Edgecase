@@ -2,9 +2,4 @@
 
 public class HexMapController : MonoBehaviour
 {
-    public HexMapController()
-    {
-        
-    }
-    
 }
