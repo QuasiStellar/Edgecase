@@ -15,7 +15,7 @@ public static class HexMapGenerator
         int mapSize,
         float hexSize,
         float stairHeight,
-        HeightMapGenerator heightMapGenerator)
+        HexagonalHeightMapGenerator heightMapGenerator)
     {
         var heightMap = heightMapGenerator.HeightMap(mapSize);
         var mapGameObject = new GameObject("HexMap");
