@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Transactions;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PerlinHeightMapGenerator : HeightMapGenerator
+public class PerlinHeightMapGenerator : HexagonalHeightMapGenerator
 {
     private const float Smoothness = 7f;
     private const int HeightVariation = 7;
@@ -12,7 +13,7 @@ public class PerlinHeightMapGenerator : HeightMapGenerator
     
     public override int[,] HeightMap(int mapSize)
     {
-        var heightMap = new int[mapSize * 2 - 1, mapSize * 2 - 1];
+        var heightMap = base.HeightMap(mapSize);
         var noiseShift = Random.Range(NoiseShiftMin, NoiseShiftMax);
         for (var i = 0; i < mapSize * 2 - 1; i++)
         {
@@ -31,6 +32,6 @@ public class PerlinHeightMapGenerator : HeightMapGenerator
             }
         }
 
-        return heightMap;
+        return LowerEdges(heightMap, mapSize);
     }
 }
