@@ -15,14 +15,15 @@ public static class HexMapGenerator
         int mapSize,
         float hexSize,
         float stairHeight,
-        HexagonalHeightMapGenerator heightMapGenerator)
+        HexagonalHeightMapGenerator heightMapGenerator,
+        Material hexSideMaterial,
+        Material hexTopMaterial)
     {
         var heightMap = heightMapGenerator.HeightMap(mapSize);
         var mapGameObject = new GameObject("HexMap");
 
         // TODO: replace materials
-        mapGameObject.AddComponent<MeshRenderer>().materials = new[]
-            { Resources.Load<Material>("HexMaterial"), Resources.Load<Material>("HexMaterial") };
+        mapGameObject.AddComponent<MeshRenderer>().materials = new[] { hexTopMaterial, hexSideMaterial };
 
         var verticesList = new List<Vector3>();
         var upwardIndicesList = new List<int>();
@@ -144,7 +145,7 @@ public static class HexMapGenerator
         {
             vertices = verticesList.ToArray(),
             normals = RecalculateNormals(normalsArray, heightMap, mapSize, vertexCount),
-            uv = uvList.ToArray()
+            // uv = uvList.ToArray()
         };
 
         var indicesList = upwardIndicesList.Concat(sidewardIndicesList).ToList();

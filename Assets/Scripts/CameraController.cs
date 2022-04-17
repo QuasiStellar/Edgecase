@@ -8,7 +8,7 @@ using UnityEngine;
 ///	hold control	- enable fast movement mode
 ///	right mouse  	- enable free look
 ///	mouse			- free look / rotation
-public class FreeCameraController : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     private const float Tolerance = 0.001f;
 
