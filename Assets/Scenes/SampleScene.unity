@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640f9f2e56098ee499621b70f1f3be60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 963194227}
+  cam: {fileID: 963194227}
   hexSideMaterial: {fileID: 2100000, guid: 677b9c950adda974293da3bf51697dcf, type: 2}
   hexTopMaterial: {fileID: 2100000, guid: 677b9c950adda974293da3bf51697dcf, type: 2}
 --- !u!1 &963194225
