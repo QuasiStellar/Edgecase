@@ -9,11 +9,9 @@ public class HexMap
     public HexMap
     (
         int mapSize,
-        float hexSize,
-        float stairHeight,
         HexagonalHeightMap heightMap,
-        Material hexSideMaterial,
-        Material hexTopMaterial
+        Material hexMaterial,
+        float gameScale
     )
     {
         _go = new GameObject("HexMap");
@@ -29,10 +27,8 @@ public class HexMap
                     i - mapSize + 1,
                     j - mapSize + 1,
                     heightMap[i, j],
-                    hexSize,
-                    stairHeight,
-                    hexTopMaterial,
-                    hexSideMaterial
+                    hexMaterial,
+                    gameScale
                 );
                 
                 hex.SetParent(_go);

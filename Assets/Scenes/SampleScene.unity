@@ -260,8 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 963194227}
-  hexSideMaterial: {fileID: 2100000, guid: 677b9c950adda974293da3bf51697dcf, type: 2}
-  hexTopMaterial: {fileID: 2100000, guid: 677b9c950adda974293da3bf51697dcf, type: 2}
+  hexMaterial: {fileID: 2100000, guid: 677b9c950adda974293da3bf51697dcf, type: 2}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

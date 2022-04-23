@@ -5,13 +5,11 @@ using Utils;
 public class GameController : MonoBehaviour
 {
     private const int MapSize = 10;
-    private const float HexSize = 10;
-    private const float StairHeight = HexSize * 1.5f;
+    private const float GameScale = 10;
 
     public Camera cam;
 
-    public Material hexSideMaterial;
-    public Material hexTopMaterial;
+    public Material hexMaterial;
     
     private HexMap hexMap;
 
@@ -19,17 +17,15 @@ public class GameController : MonoBehaviour
     {
         hexMap = new HexMap(
             MapSize,
-            HexSize,
-            StairHeight,
             new PerlinHeightMap(MapSize),
-            hexSideMaterial,
-            hexTopMaterial
+            hexMaterial,
+            GameScale
         );
 
         cam.transform.position = new Vector3(
-            -MapSize * HexSize * 0.5f,
-            MapSize * HexSize * Numbers.Sqrt3X2,
-            -MapSize * HexSize * Numbers.Sqrt3By2
+            -MapSize * GameScale * 0.5f,
+            MapSize * GameScale * Numbers.Sqrt3X2,
+            -MapSize * GameScale * Numbers.Sqrt3By2
         );
     }
 }
