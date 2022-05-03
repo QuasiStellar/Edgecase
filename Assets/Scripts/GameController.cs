@@ -19,7 +19,8 @@ public class GameController : MonoBehaviour
             MapSize,
             new PerlinHeightMap(MapSize),
             hexMaterial,
-            GameScale
+            GameScale,
+            cam
         );
 
         cam.transform.position = new Vector3(

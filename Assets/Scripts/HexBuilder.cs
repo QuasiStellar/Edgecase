@@ -2,19 +2,16 @@
 using UnityEngine;
 using Utils;
 
-public class Hex
+public static class HexBuilder
 {
     private const int PillarSize = 10;
 
-    private readonly GameObject _go;
-    private int _aPos;
-    private int _bPos;
-    private int _height;
-    private static readonly int Radius = Shader.PropertyToID("Radius");
-    private static readonly int Height = Shader.PropertyToID("Height");
-    private static readonly int Thickness = Shader.PropertyToID("Thickness");
+    private static readonly int Radius = Shader.PropertyToID("_Radius");
+    private static readonly int Height = Shader.PropertyToID("_Height");
+    private static readonly int Thickness = Shader.PropertyToID("_Thickness");
+    private static readonly int EdgeColor = Shader.PropertyToID("_EdgeColor");
 
-    public Hex
+    public static GameObject Hex
     (
         int aPos,
         int bPos,
@@ -23,11 +20,7 @@ public class Hex
         float gameScale
     )
     {
-        _aPos = aPos;
-        _bPos = bPos;
-        _height = height;
-
-        _go = new GameObject("Hex");
+        var hex = new GameObject("Hex");
 
         var hexSize = gameScale * 1f;
         var stairHeight = gameScale * 1.5f;
@@ -52,7 +45,7 @@ public class Hex
             new Vector3(-hexSize * Numbers.Sqrt3By4, 0, hexSize / 4)
         };
 
-        _go.AddComponent<MeshFilter>().mesh = new Mesh
+        hex.AddComponent<MeshFilter>().mesh = new Mesh
         {
             vertices = topVertices
                 .Concat(topVertices)
@@ -94,24 +87,26 @@ public class Hex
                 new Vector3(Numbers.Sqrt3By2 * hexSize, pillarHeight, hexSize)
             )
         };
-        
-        var shader = Shader.Find("Shader Graphs/HexOutline");
-        hexMaterial.shader = shader;
-        hexMaterial.SetFloat(Radius, hexSize / 2);
-        hexMaterial.SetFloat(Height, height * stairHeight);
-        hexMaterial.SetFloat(Thickness, hexSize / 10);
-        _go.AddComponent<MeshRenderer>().material = hexMaterial;
 
-        _go.transform.position = new Vector3
+        hexMaterial = new Material(hexMaterial);
+        hexMaterial.SetFloat(Radius, hexSize / 2);
+        hexMaterial.SetFloat(Height, pillarHeight);
+        hexMaterial.SetFloat(Thickness, hexSize / 5);
+        hexMaterial.SetColor(EdgeColor, new Color(42 / 256f, 42 / 256f, 42 / 256f));
+        // hexMaterial.SetColor(EdgeColor, new Color(52 / 256f, 204 / 256f, 255 / 256f));
+        hex.AddComponent<MeshRenderer>().material = hexMaterial;
+
+        hex.AddComponent<MeshCollider>();
+
+        hex.AddComponent<HexController>();
+
+        hex.transform.position = new Vector3
         (
             (aPos - bPos / 2f) * hexSize * Numbers.Sqrt3By2,
             height * stairHeight,
             bPos * hexSize * 3 / 4
         );
-    }
 
-    public void SetParent(GameObject parent)
-    {
-        _go.transform.SetParent(parent.transform);
+        return hex;
     }
 }
