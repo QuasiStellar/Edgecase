@@ -1,6 +1,6 @@
 ﻿namespace HeightMaps
 {
-    public class FlatHeightMap : HexagonalHeightMap
+    public class FlatHeightMap : HeightMap
     {
         public FlatHeightMap(int mapSize) : base(mapSize)
         {

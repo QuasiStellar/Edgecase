@@ -13,6 +13,11 @@ namespace Utils
             _bPos = bPos;
         }
 
+        public Tuple<int, int> ToCoords()
+        {
+            return Tuple.Create(_aPos, _bPos);
+        }
+
         public HexPos Neighbour(Direction direction)
         {
             return direction switch

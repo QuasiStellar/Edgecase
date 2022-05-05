@@ -11,11 +11,11 @@ public class GameController : MonoBehaviour
 
     public Material hexMaterial;
     
-    private HexMap hexMap;
+    private HexBoard _hexBoard;
 
     private void Start()
     {
-        hexMap = new HexMap(
+        _hexBoard = new HexBoard(
             MapSize,
             new PerlinHeightMap(MapSize),
             hexMaterial,

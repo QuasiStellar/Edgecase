@@ -1,10 +1,11 @@
 ﻿using System;
 using UnityEngine;
+using Utils;
 using Random = UnityEngine.Random;
 
 namespace HeightMaps
 {
-    public class PerlinHeightMap : HexagonalHeightMap
+    public class PerlinHeightMap : HeightMap
     {
         private const float Smoothness = 7f;
         private const int HeightVariation = 7;
@@ -28,7 +29,7 @@ namespace HeightMaps
                         height = HeightVariation - 1;
                     else if (height < 0)
                         height = 0;
-                    Map[aPos + mapSize - 1, bPos + mapSize - 1] = height;
+                    Map[new HexPos(aPos + mapSize - 1, bPos + mapSize - 1)] = height;
                 }
             }
         }

@@ -1,15 +1,28 @@
-﻿namespace HeightMaps
-{
-    public abstract class HeightMap
-    {
-        protected int[,] Map;
-        protected readonly int MapSize;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Utils;
 
-        public virtual int this[int i, int j] => Map[i, j];
-        
+namespace HeightMaps
+{
+    public abstract class HeightMap : IEnumerable
+    {
+        protected readonly HexMap<int> Map;
+
+        public int this[HexPos hexPos] => Map[hexPos];
+
         protected HeightMap(int mapSize)
         {
-            MapSize = mapSize;
+            Map = new HexMap<int>(mapSize);
+        }
+        
+        public IEnumerator<KeyValuePair<HexPos, int>> GetEnumerator()
+        {
+            return Map.GetEnumerator();
+        }
+        
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
