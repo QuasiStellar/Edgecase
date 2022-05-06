@@ -8,7 +8,8 @@ public class GameController : MonoBehaviour
     private const float GameScale = 10;
 
     public Camera cam;
-
+    public Camera debugCam;
+    
     public Material hexMaterial;
     
     private HexBoard _hexBoard;
@@ -23,10 +24,13 @@ public class GameController : MonoBehaviour
             cam
         );
 
-        cam.transform.position = new Vector3(
+        var position = cam.transform;
+        position.position = new Vector3(
             -MapSize * GameScale * 0.5f,
             MapSize * GameScale * Numbers.Sqrt3X2,
             -MapSize * GameScale * Numbers.Sqrt3By2
         );
+        debugCam.transform.position = position.position;
+        
     }
 }
