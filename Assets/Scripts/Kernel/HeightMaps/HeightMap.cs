@@ -14,15 +14,17 @@ namespace HeightMaps
         {
             Map = new HexMap<int>(mapSize);
         }
-        
+
         public IEnumerator<KeyValuePair<HexPos, int>> GetEnumerator()
         {
             return Map.GetEnumerator();
         }
-        
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
+
+        public bool HexExistsAtPos(HexPos hexPos) => Map.HexExistsAtPos(hexPos);
     }
 }
