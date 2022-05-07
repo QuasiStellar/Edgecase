@@ -43,7 +43,7 @@ namespace Utils
             return !(thisPos == otherPos);
         }
 
-        public HexPos Neighbour(Direction direction)
+        public HexPos NeighbourByDirection(Direction direction)
         {
             return direction switch
             {
