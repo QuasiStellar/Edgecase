@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Utils
 {
@@ -55,6 +57,20 @@ namespace Utils
                 Direction.DownLeft => new HexPos(_aPos - 1, _bPos),
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
             };
+        }
+
+        private IEnumerable<HexPos> Neighbours
+        {
+            get
+            {
+                var allDirections = Enum.GetValues(typeof(Direction)).Cast<Direction>();
+                return allDirections.Select(this.NeighbourByDirection);
+            }
+        }
+
+        public bool IsNeighbour(HexPos otherPos)
+        {
+            return this.Neighbours.Contains(otherPos);
         }
     }
 }
