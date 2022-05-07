@@ -31,15 +31,25 @@ namespace Utils
             return GetEnumerator();
         }
 
-        private HexPos ValidatePos(HexPos hexPos)
+        public bool HexExistsAtPos(HexPos hexPos)
         {
             var (a, b) = hexPos.ToCoords();
-            if (a >= _size * 2 - 1 || a < 0 || b >= _size * 2 - 1 || b < 0 || Math.Abs(a - b) >= _size)
+            bool aFits = 0 <= a && a < _size * 2 - 1;
+            bool bFits = 0 <= b && b < _size * 2 - 1;
+            bool distanceFromDiagonalFits = Math.Abs(a - b) < _size;
+            return aFits && bFits && distanceFromDiagonalFits;
+        }
+
+        private HexPos ValidatePos(HexPos hexPos)
+        {
+            if (HexExistsAtPos(hexPos))
+            {
+                return hexPos;
+            }
+            else
             {
                 throw new IndexOutOfRangeException("Index was out of the bounds of the hexagonal map.");
             }
-
-            return hexPos;
         }
     }
 }
