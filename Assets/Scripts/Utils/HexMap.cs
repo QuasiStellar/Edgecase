@@ -34,22 +34,19 @@ namespace Utils
         public bool HexExistsAtPos(HexPos hexPos)
         {
             var (a, b) = hexPos.ToCoords();
-            bool aFits = 0 <= a && a < _size * 2 - 1;
-            bool bFits = 0 <= b && b < _size * 2 - 1;
-            bool distanceFromDiagonalFits = Math.Abs(a - b) < _size;
+            var aFits = 0 <= a && a < _size * 2 - 1;
+            var bFits = 0 <= b && b < _size * 2 - 1;
+            var distanceFromDiagonalFits = Math.Abs(a - b) < _size;
             return aFits && bFits && distanceFromDiagonalFits;
         }
 
         private HexPos ValidatePos(HexPos hexPos)
         {
-            if (HexExistsAtPos(hexPos))
-            {
-                return hexPos;
-            }
-            else
+            if (!HexExistsAtPos(hexPos))
             {
                 throw new IndexOutOfRangeException("Index was out of the bounds of the hexagonal map.");
             }
+            return hexPos;
         }
     }
 }

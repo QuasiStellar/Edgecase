@@ -29,7 +29,7 @@ namespace Display
                 new Color(42 / 256f, 42 / 256f, 42 / 256f)
             );
         }
-    
+
         public void SetParent(GameObject parent)
         {
             transform.SetParent(parent.transform);

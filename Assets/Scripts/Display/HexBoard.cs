@@ -10,7 +10,7 @@ namespace Display
         private readonly GameObject _go;
         private readonly HexMap<GameObject> _hexBoard;
         private readonly int _mapSize;
-    
+
         public GameObject this[HexPos hexPos] => _hexBoard[hexPos];
 
         public HexBoard
@@ -25,7 +25,7 @@ namespace Display
             _mapSize = mapSize;
 
             _hexBoard = new HexMap<GameObject>(mapSize);
-        
+
             _go = new GameObject("HexBoard");
             _go.AddComponent<HexBoardController>().cam = cam;
 
@@ -34,7 +34,7 @@ namespace Display
                 var hexPos = _.Key;
                 var height = _.Value;
                 var (a, b) = hexPos.ToCoords();
-            
+
                 var hex = HexBuilder.Hex
                 (
                     a - mapSize + 1,
@@ -43,7 +43,7 @@ namespace Display
                     hexMaterial,
                     gameScale
                 );
-                
+
                 hex.GetComponent<HexController>().SetParent(_go);
 
                 _hexBoard[hexPos] = hex;

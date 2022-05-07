@@ -15,37 +15,25 @@ namespace Utils
             _bPos = bPos;
         }
 
-        public (int, int) ToCoords()
-        {
-            return (_aPos, _bPos);
-        }
+        public (int, int) ToCoords() => (_aPos, _bPos);
 
-        public override bool Equals(object obj)
-        {
-            return obj is HexPos otherPos && this.Equals(otherPos);
-        }
+        public override bool Equals(object obj) => obj is HexPos otherPos && Equals(otherPos);
 
-        public bool Equals(HexPos otherPos)
-        {
-            return this.ToCoords() == otherPos.ToCoords();
-        }
+        public bool Equals(HexPos otherPos) => this.ToCoords() == otherPos.ToCoords();
 
-        public override int GetHashCode()
-        {
-            return this.ToCoords().GetHashCode();
-        }
+        public override int GetHashCode() => ToCoords().GetHashCode();
 
-        public static bool operator ==(HexPos thisPos, HexPos otherPos)
-        {
-            return thisPos.Equals(otherPos);
-        }
+        public static bool operator ==(HexPos thisPos, HexPos otherPos) => thisPos.Equals(otherPos);
 
-        public static bool operator !=(HexPos thisPos, HexPos otherPos)
-        {
-            return !(thisPos == otherPos);
-        }
+        public static bool operator !=(HexPos thisPos, HexPos otherPos) => !(thisPos == otherPos);
 
-        public HexPos NeighbourByDirection(Direction direction)
+        public bool IsNeighbour(HexPos otherPos) => Neighbours.Contains(otherPos);
+
+        public HexPos Shift(Direction direction, int offset)
+            => Enumerable.Range(1, offset).Aggregate(this, (current, i)
+                => current.NeighbourByDirection(direction));
+
+        private HexPos NeighbourByDirection(Direction direction)
         {
             return direction switch
             {
@@ -64,23 +52,8 @@ namespace Utils
             get
             {
                 var allDirections = Enum.GetValues(typeof(Direction)).Cast<Direction>();
-                return allDirections.Select(this.NeighbourByDirection);
+                return allDirections.Select(NeighbourByDirection);
             }
-        }
-
-        public bool IsNeighbour(HexPos otherPos)
-        {
-            return this.Neighbours.Contains(otherPos);
-        }
-
-        public HexPos Shift(Direction direction, int offset)
-        {
-            var currentHexPos = this;
-            foreach (var i in Enumerable.Range(1, offset))
-            {
-                currentHexPos = currentHexPos.NeighbourByDirection(direction);
-            }
-            return currentHexPos;
         }
     }
 }

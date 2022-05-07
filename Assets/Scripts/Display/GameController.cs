@@ -11,9 +11,9 @@ namespace Display
 
         public Camera cam;
         public Camera debugCam;
-    
+
         public Material hexMaterial;
-    
+
         private HexBoard _hexBoard;
 
         private void Start()
@@ -33,7 +33,6 @@ namespace Display
                 -MapSize * GameScale * Numbers.Sqrt3By2
             );
             debugCam.transform.position = position.position;
-        
         }
     }
 }

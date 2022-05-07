@@ -6,7 +6,7 @@ namespace Display
     public class HexBoardController : MonoBehaviour
     {
         private GameObject _selected;
-    
+
         public Camera cam;
 
         private void Update()

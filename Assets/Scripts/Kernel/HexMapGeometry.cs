@@ -7,8 +7,8 @@ namespace Kernel
 {
     public class HexMapGeometry
     {
-        private HeightMap _heights;
-        private Direction _viewDirection;
+        private readonly HeightMap _heights;
+        private readonly Direction _viewDirection;
 
         public HexMapGeometry(HeightMap heights, Direction viewDirection) {
             _heights = heights;

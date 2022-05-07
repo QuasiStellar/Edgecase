@@ -115,7 +115,7 @@ namespace Display.Cameras
         private IEnumerator RotateCamera(float angle, float duration)
         {
             _coroutineIsExecuting = true;
-            
+
             var elapsedTime = 0f;
             var t = transform;
             var (startPosition, startRotation) = (t.position, t.eulerAngles);
@@ -123,7 +123,7 @@ namespace Display.Cameras
             var ray = GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out var hit);
             var fulcrum = hit.point;
-            
+
             while (elapsedTime < duration)
             {
                 RotateAroundVector(elapsedTime / duration * angle, fulcrum, startPosition, startRotation);
@@ -131,7 +131,7 @@ namespace Display.Cameras
                 yield return new WaitForEndOfFrame();
             }
             RotateAroundVector(angle, fulcrum, startPosition, startRotation);
-            
+
             _coroutineIsExecuting = false;
         }
 
