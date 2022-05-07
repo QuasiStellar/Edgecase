@@ -6,25 +6,32 @@ using UnityEngine;
 namespace Editor
 {
     [CustomEditor(typeof(MeshFilter))]
-    public class NormalsVisualizer : UnityEditor.Editor {
+    public class NormalsVisualizer : UnityEditor.Editor
+    {
+        private const string EditorPrefKey = "_normals_length";
+        private Mesh _mesh;
+        private MeshFilter _mf;
+        private Vector3[] _verts;
+        private Vector3[] _normals;
+        private float _normalsLength = 1f;
+        private bool _isMeshNull;
 
-        private const string     EditorPrefKey = "_normals_length";
-        private       Mesh       _mesh;
-        private       MeshFilter _mf;
-        private       Vector3[]  _verts;
-        private       Vector3[]  _normals;
-        private       float      _normalsLength = 1f;
-
-        private void OnEnable() {
-            _mf   = target as MeshFilter;
-            if (_mf != null) {
+        private void OnEnable()
+        {
+            _isMeshNull = _mesh == null;
+            _mf = target as MeshFilter;
+            if (_mf != null)
+            {
                 _mesh = _mf.sharedMesh;
             }
+
             _normalsLength = EditorPrefs.GetFloat(EditorPrefKey);
         }
 
-        private void OnSceneGUI() {
-            if (_mesh == null) {
+        private void OnSceneGUI()
+        {
+            if (_isMeshNull)
+            {
                 return;
             }
 
@@ -33,17 +40,20 @@ namespace Editor
             _verts = _mesh.vertices;
             _normals = _mesh.normals;
             var len = _mesh.vertexCount;
-        
-            for (var i = 0; i < len; i++) {
+
+            for (var i = 0; i < len; i++)
+            {
                 Handles.DrawLine(_verts[i], _verts[i] + _normals[i] * _normalsLength);
             }
         }
 
-        public override void OnInspectorGUI() {
+        public override void OnInspectorGUI()
+        {
             base.OnInspectorGUI();
             EditorGUI.BeginChangeCheck();
             _normalsLength = EditorGUILayout.FloatField("Normals length", _normalsLength);
-            if (EditorGUI.EndChangeCheck()) {
+            if (EditorGUI.EndChangeCheck())
+            {
                 EditorPrefs.SetFloat(EditorPrefKey, _normalsLength);
             }
         }

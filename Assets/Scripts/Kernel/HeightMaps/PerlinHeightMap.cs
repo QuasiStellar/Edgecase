@@ -3,7 +3,7 @@ using UnityEngine;
 using Utils;
 using Random = UnityEngine.Random;
 
-namespace HeightMaps
+namespace Kernel.HeightMaps
 {
     public class PerlinHeightMap : HeightMap
     {
@@ -23,8 +23,8 @@ namespace HeightMaps
                     if (Math.Abs(i - j) >= mapSize) continue;
                     var aPos = i - mapSize + 1;
                     var bPos = j - mapSize + 1;
-                    var height = (int)(Mathf.PerlinNoise((aPos / Smoothness) + noiseShift,
-                        (bPos / Smoothness) + noiseShift) * HeightVariation);
+                    var height = (int)(Mathf.PerlinNoise(aPos / Smoothness + noiseShift,
+                        bPos / Smoothness + noiseShift) * HeightVariation);
                     if (height >= HeightVariation)
                         height = HeightVariation - 1;
                     else if (height < 0)
