@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 
-public class CameraSwitchController : MonoBehaviour
+namespace Display.Cameras
 {
-    public GameObject cam;
-    public GameObject debugCamera;
-    private void Update()
+    public class CameraSwitchController : MonoBehaviour
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        public GameObject cam;
+        public GameObject debugCam;
+        private void Update()
         {
-            cam.SetActive(!cam.activeSelf);
-            debugCamera.SetActive(!debugCamera.activeSelf);
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                cam.SetActive(!cam.activeSelf);
+                debugCam.SetActive(!debugCam.activeSelf);
+            }
         }
     }
 }

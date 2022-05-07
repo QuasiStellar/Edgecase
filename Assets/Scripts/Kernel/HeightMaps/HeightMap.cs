@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Utils;
 
-namespace HeightMaps
+namespace Kernel.HeightMaps
 {
     public abstract class HeightMap : IEnumerable
     {

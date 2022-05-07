@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 963194225}
-  debugCamera: {fileID: 1419927814}
+  debugCam: {fileID: 1419927814}
 --- !u!1 &796347558
 GameObject:
   m_ObjectHideFlags: 0

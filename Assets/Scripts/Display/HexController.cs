@@ -1,29 +1,38 @@
 ﻿using UnityEngine;
 
-public class HexController : MonoBehaviour
+namespace Display
 {
-    private static readonly int EdgeColor = Shader.PropertyToID("_EdgeColor");
-    
-    public void Select()
+    public class HexController : MonoBehaviour
     {
-        GetComponent<MeshRenderer>().material.SetColor
-        (
-            EdgeColor,
-            new Color(52 / 256f, 204 / 256f, 255 / 256f)
-        );
-    }
+        private static readonly int EdgeColor = Shader.PropertyToID("_EdgeColor");
+        private MeshRenderer _meshRenderer;
 
-    public void Deselect()
-    {
-        GetComponent<MeshRenderer>().material.SetColor
-        (
-            EdgeColor,
-            new Color(42 / 256f, 42 / 256f, 42 / 256f)
-        );
-    }
+        private void Start()
+        {
+            _meshRenderer = GetComponent<MeshRenderer>();
+        }
+
+        public void Select()
+        {
+            _meshRenderer.material.SetColor
+            (
+                EdgeColor,
+                new Color(52 / 256f, 204 / 256f, 255 / 256f)
+            );
+        }
+
+        public void Deselect()
+        {
+            _meshRenderer.material.SetColor
+            (
+                EdgeColor,
+                new Color(42 / 256f, 42 / 256f, 42 / 256f)
+            );
+        }
     
-    public void SetParent(GameObject parent)
-    {
-        transform.SetParent(parent.transform);
+        public void SetParent(GameObject parent)
+        {
+            transform.SetParent(parent.transform);
+        }
     }
 }

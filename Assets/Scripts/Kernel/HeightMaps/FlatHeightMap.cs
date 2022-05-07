@@ -1,4 +1,4 @@
-﻿namespace HeightMaps
+﻿namespace Kernel.HeightMaps
 {
     public class FlatHeightMap : HeightMap
     {
