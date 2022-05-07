@@ -2,7 +2,7 @@
 
 namespace Utils
 {
-    public readonly struct HexPos
+    public readonly struct HexPos : IEquatable<HexPos>
     {
         private readonly int _aPos;
         private readonly int _bPos;
@@ -13,9 +13,34 @@ namespace Utils
             _bPos = bPos;
         }
 
-        public Tuple<int, int> ToCoords()
+        public ValueTuple<int, int> ToCoords()
         {
-            return Tuple.Create(_aPos, _bPos);
+            return ValueTuple.Create(_aPos, _bPos);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is HexPos otherPos && this.Equals(otherPos);
+        }
+
+        public bool Equals(HexPos otherPos)
+        {
+            return this.ToCoords() == otherPos.ToCoords();
+        }
+
+        public override int GetHashCode()
+        {
+            return this.ToCoords().GetHashCode();
+        }
+
+        public static bool operator ==(HexPos thisPos, HexPos otherPos)
+        {
+            return thisPos.Equals(otherPos);
+        }
+
+        public static bool operator !=(HexPos thisPos, HexPos otherPos)
+        {
+            return !(thisPos == otherPos);
         }
 
         public HexPos Neighbour(Direction direction)
