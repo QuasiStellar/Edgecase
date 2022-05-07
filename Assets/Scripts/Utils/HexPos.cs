@@ -72,5 +72,15 @@ namespace Utils
         {
             return this.Neighbours.Contains(otherPos);
         }
+
+        public HexPos Shift(Direction direction, int offset)
+        {
+            var currentHexPos = this;
+            foreach (var i in Enumerable.Range(1, offset))
+            {
+                currentHexPos = currentHexPos.NeighbourByDirection(direction);
+            }
+            return currentHexPos;
+        }
     }
 }
