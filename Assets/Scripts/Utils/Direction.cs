@@ -14,7 +14,7 @@ namespace Utils
 
     public static class DirectionMethods
     {
-        public static Direction Reverse(Direction direction)
+        public static Direction Reverse(this Direction direction)
         {
             return direction switch
             {
@@ -27,8 +27,8 @@ namespace Utils
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
             };
         }
-        
-        public static Direction Clockwise(Direction direction)
+
+        public static Direction Clockwise(this Direction direction)
         {
             return direction switch
             {
@@ -41,8 +41,8 @@ namespace Utils
                 _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
             };
         }
-        
-        public static Direction Counterclockwise(Direction direction)
+
+        public static Direction Counterclockwise(this Direction direction)
         {
             return direction switch
             {
