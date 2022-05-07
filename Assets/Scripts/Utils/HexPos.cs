@@ -13,9 +13,9 @@ namespace Utils
             _bPos = bPos;
         }
 
-        public ValueTuple<int, int> ToCoords()
+        public (int, int) ToCoords()
         {
-            return ValueTuple.Create(_aPos, _bPos);
+            return (_aPos, _bPos);
         }
 
         public override bool Equals(object obj)
