@@ -1,6 +1,6 @@
-﻿using System;
-using Kernel.HeightMaps;
+﻿using Kernel.HeightMaps;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Utils;
 
 namespace Display
@@ -19,7 +19,8 @@ namespace Display
             HeightMap heightMap,
             Material hexMaterial,
             float gameScale,
-            Camera cam
+            Camera cam,
+            PlayerInput playerInput
         )
         {
             _mapSize = mapSize;
@@ -27,7 +28,9 @@ namespace Display
             _hexBoard = new HexMap<GameObject>(mapSize);
 
             _go = new GameObject("HexBoard");
-            _go.AddComponent<HexBoardController>().cam = cam;
+            var controller = _go.AddComponent<HexBoardController>();
+            controller.cam = cam;
+            controller.playerInput = playerInput;
 
             foreach (var _ in heightMap)
             {

@@ -1,5 +1,6 @@
 using Kernel.HeightMaps;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Utils;
 
 namespace Display
@@ -11,6 +12,7 @@ namespace Display
 
         public Camera cam;
         public Camera debugCam;
+        public PlayerInput playerInput;
 
         public Material hexMaterial;
 
@@ -23,16 +25,17 @@ namespace Display
                 new PerlinHeightMap(MapSize),
                 hexMaterial,
                 GameScale,
-                cam
+                cam,
+                playerInput
             );
 
-            var position = cam.transform;
-            position.position = new Vector3(
+            var position = new Vector3(
                 -MapSize * GameScale * 0.5f,
                 MapSize * GameScale * Numbers.Sqrt3X2,
                 -MapSize * GameScale * Numbers.Sqrt3By2
             );
-            debugCam.transform.position = position.position;
+            cam.transform.position = position;
+            debugCam.transform.position = position;
         }
     }
 }

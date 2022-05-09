@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Display.Cameras
 {
@@ -6,13 +8,19 @@ namespace Display.Cameras
     {
         public GameObject cam;
         public GameObject debugCam;
-        private void Update()
+        public PlayerInput playerInput;
+
+        private void Start()
         {
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                cam.SetActive(!cam.activeSelf);
-                debugCam.SetActive(!debugCam.activeSelf);
-            }
+            playerInput.actions["SwitchCameras"].performed += _ => SwitchCameras();
+        }
+
+        private void SwitchCameras()
+        {
+            var toDebug = playerInput.currentActionMap.name == "InGame";
+            cam.SetActive(!toDebug);
+            debugCam.SetActive(toDebug);
+            playerInput.SwitchCurrentActionMap(toDebug ? "InGameDebug" : "InGame");
         }
     }
 }

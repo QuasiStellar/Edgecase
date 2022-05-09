@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
 // ReSharper disable Unity.NoNullPropagation
 
 namespace Display
@@ -8,19 +11,22 @@ namespace Display
         private GameObject _selected;
 
         public Camera cam;
+        public PlayerInput playerInput;
 
-        private void Update()
+        private void Start()
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                var ray = cam.ScreenPointToRay(Input.mousePosition);
-                if (!Physics.Raycast(ray, out var hit)) return;
-                if (hit.collider.gameObject.name != "Hex") return;
-                var newHex = hit.collider.gameObject;
-                _selected?.GetComponent<HexController>().Deselect();
-                _selected = newHex;
-                newHex.GetComponent<HexController>().Select();
-            }
+            playerInput.actions["Click"].performed += _ => HandleClick();
+        }
+
+        private void HandleClick()
+        {
+            var ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            if (!Physics.Raycast(ray, out var hit)) return;
+            if (hit.collider.gameObject.name != "Hex") return;
+            var newHex = hit.collider.gameObject;
+            _selected?.GetComponent<HexController>().Deselect();
+            _selected = newHex;
+            newHex.GetComponent<HexController>().Select();
         }
     }
 }
