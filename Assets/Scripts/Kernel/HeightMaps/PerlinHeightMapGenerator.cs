@@ -15,6 +15,14 @@ namespace Kernel.HeightMaps
 
         public PerlinHeightMapGenerator(float smoothness, int heightVariation)
         {
+            if (smoothness <= 0)
+            {
+                throw new ArgumentOutOfRangeException("smoothness should be positive.");
+            }
+            if (heightVariation <= 0)
+            {
+                throw new ArgumentOutOfRangeException("heightVariation should be positive.");
+            }
             _smoothness = smoothness;
             _heightVariation = heightVariation;
             _noiseShiftMin = 10000;
