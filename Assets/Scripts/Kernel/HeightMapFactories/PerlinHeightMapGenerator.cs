@@ -3,7 +3,7 @@ using UnityEngine;
 using Utils;
 using Random = UnityEngine.Random;
 
-namespace Kernel.HeightMaps
+namespace Kernel.HeightMapFactories
 {
     public class PerlinHeightMapGenerator
     {
