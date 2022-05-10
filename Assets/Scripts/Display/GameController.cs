@@ -20,9 +20,9 @@ namespace Display
 
         private void Start()
         {
-            var smoothness = 7f;
-            var minHeight = 0;
-            var heightVariation = 7;
+            const float smoothness = 7f;
+            const int minHeight = 0;
+            const int heightVariation = 7;
             var heightMapGenerator = new PerlinHeightMapGenerator(smoothness, minHeight, heightVariation);
             var heightMap = heightMapGenerator.BuildHeightMap(MapSize);
             _hexBoard = new HexBoard(

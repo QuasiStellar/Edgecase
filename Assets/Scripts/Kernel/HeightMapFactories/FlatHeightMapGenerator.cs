@@ -1,7 +1,7 @@
 using System;
 using Utils;
 
-﻿namespace Kernel.HeightMapFactories
+namespace Kernel.HeightMapFactories
 {
     public class FlatHeightMapGenerator : IHeightMapFactory
     {

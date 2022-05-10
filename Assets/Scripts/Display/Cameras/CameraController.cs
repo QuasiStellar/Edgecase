@@ -54,7 +54,7 @@ namespace Display.Cameras
         {
             if (!_coroutineIsExecuting)
             {
-                StartCoroutine(RotateCamera(-60, 1));
+                StartCoroutine(RotateCameraCoroutine(-60, 1));
             }
         }
 
@@ -62,11 +62,11 @@ namespace Display.Cameras
         {
             if (!_coroutineIsExecuting)
             {
-                StartCoroutine(RotateCamera(60, 1));
+                StartCoroutine(RotateCameraCoroutine(60, 1));
             }
         }
 
-        private IEnumerator RotateCamera(float angle, float duration)
+        private IEnumerator RotateCameraCoroutine(float angle, float duration)
         {
             _coroutineIsExecuting = true;
 
