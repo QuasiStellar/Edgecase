@@ -43,7 +43,7 @@ namespace Display.Cameras
 
             var t = transform;
             t.position += t.right * (movementSpeed * Time.deltaTime * inputMoveVector.x) +
-                         t.up * (movementSpeed * Time.deltaTime * inputMoveVector.y);
+                          t.up * (movementSpeed * Time.deltaTime * inputMoveVector.y);
         }
 
         private void RotateCameraClockwise()
@@ -89,10 +89,12 @@ namespace Display.Cameras
         private void RotateAroundVector(float angle, Vector3 fulcrum, Vector3 startPosition, Vector3 startRotation)
         {
             var vector = Quaternion.AngleAxis(angle, Vector3.up) * (startPosition - fulcrum);
-            transform.position = new Vector3(
+            transform.position = new Vector3
+            (
                 fulcrum.x + vector.x,
                 fulcrum.y + vector.y,
-                fulcrum.z + vector.z);
+                fulcrum.z + vector.z
+            );
 
             startRotation.y += angle;
             transform.rotation = Quaternion.Euler(startRotation);
