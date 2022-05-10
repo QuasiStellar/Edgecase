@@ -24,7 +24,7 @@ namespace Display
             var minHeight = 0;
             var heightVariation = 7;
             var heightMapGenerator = new PerlinHeightMapGenerator(smoothness, minHeight, heightVariation);
-            var heightMap = heightMapGenerator.GenerateHeightMap(MapSize);
+            var heightMap = heightMapGenerator.BuildHeightMap(MapSize);
             _hexBoard = new HexBoard(
                 MapSize,
                 heightMap,
