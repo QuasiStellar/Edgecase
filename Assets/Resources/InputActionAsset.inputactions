@@ -203,7 +203,7 @@
                 {
                     "name": "",
                     "id": "8026c425-281e-4a3d-bc0f-b88fb29507fe",
-                    "path": "<Keyboard>/leftArrow",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -214,7 +214,7 @@
                 {
                     "name": "",
                     "id": "ecff8fc5-75dc-4fc7-8895-29e6068bf919",
-                    "path": "<Keyboard>/rightArrow",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -299,6 +299,24 @@
                     "name": "FastMode",
                     "type": "Button",
                     "id": "f3995454-4aea-4168-b62a-df68c0b14f5d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveUp",
+                    "type": "Button",
+                    "id": "d8634f04-95c5-4c4e-863a-2b1d5f1cb67e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveDown",
+                    "type": "Button",
+                    "id": "f397be5a-f789-42ae-b196-c5be3c99f439",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -468,6 +486,28 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dff23206-c528-422d-906d-434c8bb8800e",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "84d83f13-6044-4d3d-afc9-a80121459268",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
