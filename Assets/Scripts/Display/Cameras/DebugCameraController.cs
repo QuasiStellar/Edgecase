@@ -21,7 +21,7 @@ namespace Display.Cameras
         private const float FastMovementSpeed = 200f;
 
         /// Sensitivity for free look.
-        private const float FreeLookSensitivity = 3f;
+        private const float FreeLookSensitivity = 0.5f;
 
         private void Update()
         {
@@ -32,15 +32,17 @@ namespace Display.Cameras
 
             var t = transform;
             t.position += t.right * (movementSpeed * Time.deltaTime * inputMoveVector.x) +
-                         t.up * (movementSpeed * Time.deltaTime * inputMoveVector.y);
+                          t.up * (movementSpeed * Time.deltaTime * inputMoveVector.y);
 
             if (!playerInput.actions["Looking"].IsPressed()) return;
             var inputLookVector = playerInput.actions["LookFree"].ReadValue<Vector2>();
+
             var localEulerAngles = t.localEulerAngles;
+
             var newRotationX = localEulerAngles.y + inputLookVector.x * FreeLookSensitivity;
-            var newRotationY = localEulerAngles.x + inputLookVector.y * FreeLookSensitivity;
-            localEulerAngles = new Vector3(newRotationY, newRotationX, 0f);
-            t.localEulerAngles = localEulerAngles;
+            var newRotationY = localEulerAngles.x - inputLookVector.y * FreeLookSensitivity;
+
+            t.localEulerAngles = new Vector3(newRotationY, newRotationX, 0f);
         }
     }
 }
