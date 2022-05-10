@@ -20,9 +20,10 @@ namespace Display
 
         private void Start()
         {
+            var heightMap = new PerlinHeightMapGenerator().GenerateHeightMap(MapSize);
             _hexBoard = new HexBoard(
                 MapSize,
-                new PerlinHeightMap(MapSize),
+                heightMap,
                 hexMaterial,
                 GameScale,
                 cam,

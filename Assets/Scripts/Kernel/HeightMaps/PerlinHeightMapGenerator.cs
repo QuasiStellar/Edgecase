@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace Kernel.HeightMaps
 {
-    public class PerlinHeightMap : HeightMap
+    public class PerlinHeightMapGenerator
     {
         private const float Smoothness = 7f;
         private const int HeightVariation = 7;
@@ -13,8 +13,9 @@ namespace Kernel.HeightMaps
         private const int NoiseShiftMin = 10000;
         private const int NoiseShiftMax = 100000;
 
-        public PerlinHeightMap(int mapSize) : base(mapSize)
+        public HexMap<int> GenerateHeightMap(int mapSize)
         {
+            var map = new HexMap<int>(mapSize);
             var noiseShift = Random.Range(NoiseShiftMin, NoiseShiftMax);
             for (var i = 0; i < mapSize * 2 - 1; i++)
             {
@@ -29,9 +30,10 @@ namespace Kernel.HeightMaps
                         height = HeightVariation - 1;
                     else if (height < 0)
                         height = 0;
-                    Map[new HexPos(aPos + mapSize - 1, bPos + mapSize - 1)] = height;
+                    map[new HexPos(aPos + mapSize - 1, bPos + mapSize - 1)] = height;
                 }
             }
+            return map;
         }
     }
 }
