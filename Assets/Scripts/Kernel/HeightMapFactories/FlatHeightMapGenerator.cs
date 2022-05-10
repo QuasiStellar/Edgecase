@@ -3,7 +3,7 @@ using Utils;
 
 ﻿namespace Kernel.HeightMapFactories
 {
-    public class FlatHeightMapGenerator
+    public class FlatHeightMapGenerator : IHeightMapFactory
     {
         private readonly int _height;
 
@@ -12,7 +12,7 @@ using Utils;
             _height = height;
         }
 
-        public HexMap<int> GenerateHeightMap(int mapSize)
+        public HexMap<int> BuildHeightMap(int mapSize)
         {
             var map = new HexMap<int>(mapSize);
             // TODO: Fix duplicate code
