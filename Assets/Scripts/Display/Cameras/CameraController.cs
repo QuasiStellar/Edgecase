@@ -23,10 +23,15 @@ namespace Display.Cameras
 
         private Camera _camera;
         private bool _coroutineIsExecuting;
+        private Vector3 _cameraForwardProjection;
+        private Vector3 _cameraRightProjection;
 
         private void Start()
         {
             _camera = GetComponent<Camera>();
+
+            _cameraForwardProjection = GetForwardProjectionAndNormalizeIt();
+            _cameraRightProjection = transform.right;
 
             playerInput.actions["RotateCameraLeft"].performed += _ => RotateCameraClockwise();
             playerInput.actions["RotateCameraRight"].performed += _ => RotateCameraCounterclockwise();
@@ -41,9 +46,8 @@ namespace Display.Cameras
             var fastMode = playerInput.actions["FastMode"].IsPressed();
             var movementSpeed = fastMode ? FastMovementSpeed : MovementSpeed;
 
-            var t = transform;
-            t.position += t.right * (movementSpeed * Time.deltaTime * inputMoveVector.x) +
-                          t.up * (movementSpeed * Time.deltaTime * inputMoveVector.y);
+            transform.position += _cameraRightProjection * (movementSpeed * Time.deltaTime * inputMoveVector.x) +
+                                  _cameraForwardProjection * (movementSpeed * Time.deltaTime * inputMoveVector.y);
         }
 
         private void RotateCameraClockwise()
@@ -83,6 +87,8 @@ namespace Display.Cameras
 
             RotateAroundVector(angle, fulcrum, startPosition, startRotation);
 
+            _cameraForwardProjection = GetForwardProjectionAndNormalizeIt();
+            _cameraRightProjection = transform.right;
             _coroutineIsExecuting = false;
         }
 
@@ -98,6 +104,13 @@ namespace Display.Cameras
 
             startRotation.y += angle;
             transform.rotation = Quaternion.Euler(startRotation);
+        }
+
+        private Vector3 GetForwardProjectionAndNormalizeIt()
+        {
+            var forwardProjection = transform.forward;
+            forwardProjection.y = 0;
+            return Vector3.Normalize(forwardProjection);
         }
     }
 }
