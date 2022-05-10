@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
@@ -24,12 +25,12 @@ namespace Display
         {
             _mapSize = mapSize;
 
-            _hexBoard = new HexMap<GameObject>(mapSize);
-
             _go = new GameObject("HexBoard");
             var controller = _go.AddComponent<HexBoardController>();
             controller.cam = cam;
             controller.playerInput = playerInput;
+
+            var hexBoardContent = new Dictionary<HexPos, GameObject>();
 
             foreach (var _ in heightMap)
             {
@@ -48,8 +49,10 @@ namespace Display
 
                 hex.GetComponent<HexController>().SetParent(_go);
 
-                _hexBoard[hexPos] = hex;
+                hexBoardContent[hexPos] = hex;
             }
+
+            _hexBoard = new HexMap<GameObject>(hexBoardContent);
         }
     }
 }

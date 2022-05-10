@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using Random = UnityEngine.Random;
@@ -33,7 +34,7 @@ namespace Kernel.HeightMapFactories
 
         public HexMap<int> BuildHeightMap(int mapSize)
         {
-            var map = new HexMap<int>(mapSize);
+            var mapContent = new Dictionary<HexPos, int>();
             var noiseShift = Random.Range(_noiseShiftMin, _noiseShiftMax);
             for (var i = 0; i < mapSize * 2 - 1; i++)
             {
@@ -53,10 +54,10 @@ namespace Kernel.HeightMapFactories
                     else if (relativeHeight < 0)
                         relativeHeight = 0;
                     var height = _minHeight + relativeHeight;
-                    map[new HexPos(aPos + mapSize - 1, bPos + mapSize - 1)] = height;
+                    mapContent[new HexPos(aPos + mapSize - 1, bPos + mapSize - 1)] = height;
                 }
             }
-            return map;
+            return new HexMap<int>(mapContent);
         }
     }
 }

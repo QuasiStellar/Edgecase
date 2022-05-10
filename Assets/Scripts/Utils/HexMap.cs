@@ -6,24 +6,22 @@ namespace Utils
 {
     public class HexMap<T> : IEnumerable
     {
-        private readonly Dictionary<HexPos, T> _hexDictionary;
-        private readonly int _size;
+        private readonly Dictionary<HexPos, T> _content;
 
         public T this[HexPos hexPos]
         {
-            get => _hexDictionary[ValidatePos(hexPos)];
-            set => _hexDictionary[ValidatePos(hexPos)] = value;
+            get => _content[ValidatePos(hexPos)];
+            set => _content[ValidatePos(hexPos)] = value;
         }
 
-        public HexMap(int size)
+        public HexMap(IDictionary<HexPos, T> content)
         {
-            _size = size;
-            _hexDictionary = new Dictionary<HexPos, T>();
+            _content = new Dictionary<HexPos, T>(content);
         }
 
         public IEnumerator<KeyValuePair<HexPos, T>> GetEnumerator()
         {
-            return _hexDictionary.GetEnumerator();
+            return _content.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -33,11 +31,7 @@ namespace Utils
 
         public bool HexExistsAtPos(HexPos hexPos)
         {
-            var (a, b) = hexPos.ToCoords();
-            var aFits = 0 <= a && a < _size * 2 - 1;
-            var bFits = 0 <= b && b < _size * 2 - 1;
-            var distanceFromDiagonalFits = Math.Abs(a - b) < _size;
-            return aFits && bFits && distanceFromDiagonalFits;
+            return _content.ContainsKey(hexPos);
         }
 
         private HexPos ValidatePos(HexPos hexPos)
