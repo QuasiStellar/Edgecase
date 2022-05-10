@@ -16,7 +16,7 @@ namespace Display
         public HexBoard
         (
             int mapSize,
-            HeightMap heightMap,
+            HexMap<int> heightMap,
             Material hexMaterial,
             float gameScale,
             Camera cam,
