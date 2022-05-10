@@ -1,4 +1,4 @@
-using Kernel.HeightMaps;
+using Kernel.HeightMapFactories;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
