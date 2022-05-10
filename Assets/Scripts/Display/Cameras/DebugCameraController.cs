@@ -30,9 +30,13 @@ namespace Display.Cameras
             var fastMode = playerInput.actions["FastMode"].IsPressed();
             var movementSpeed = fastMode ? FastMovementSpeed : MovementSpeed;
 
+            var movementUp = playerInput.actions["MoveUp"].IsPressed() ? 1 : 0;
+            movementUp = playerInput.actions["MoveDown"].IsPressed() ? -1 : movementUp;
+
             var t = transform;
             t.position += t.right * (movementSpeed * Time.deltaTime * inputMoveVector.x) +
-                          t.up * (movementSpeed * Time.deltaTime * inputMoveVector.y);
+                          t.forward * (movementSpeed * Time.deltaTime * inputMoveVector.y) +
+                          Vector3.up * (movementSpeed * Time.deltaTime * movementUp);
 
             if (!playerInput.actions["Looking"].IsPressed()) return;
             var inputLookVector = playerInput.actions["LookFree"].ReadValue<Vector2>();
