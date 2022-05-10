@@ -1,16 +1,14 @@
 using System;
-
-using Kernel.HeightMaps;
 using Utils;
 
 namespace Kernel
 {
     public class HexMapGeometry
     {
-        private readonly HeightMap _heights;
+        private readonly HexMap<int> _heights;
         private readonly Direction _viewDirection;
 
-        public HexMapGeometry(HeightMap heights, Direction viewDirection) {
+        public HexMapGeometry(HexMap<int> heights, Direction viewDirection) {
             _heights = heights;
             _viewDirection = viewDirection;
         }
