@@ -3,11 +3,11 @@ using Utils;
 
 namespace Kernel.HeightMapFactories
 {
-    public class FlatHeightMapGenerator : IHeightMapFactory
+    public class FlatHeightMapFactory : IHeightMapFactory
     {
         private readonly int _height;
 
-        public FlatHeightMapGenerator(int height)
+        public FlatHeightMapFactory(int height)
         {
             _height = height;
         }
