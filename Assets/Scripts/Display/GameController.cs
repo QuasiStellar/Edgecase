@@ -13,6 +13,7 @@ namespace Display
         public Camera cam;
         public Camera debugCam;
         public PlayerInput playerInput;
+        public const float CameraHeight = MapSize * GameScale * Numbers.Sqrt3X2;
 
         public Material hexMaterial;
 
@@ -36,7 +37,7 @@ namespace Display
 
             var position = new Vector3(
                 -MapSize * GameScale * 0.5f,
-                MapSize * GameScale * Numbers.Sqrt3X2,
+                CameraHeight,
                 -MapSize * GameScale * Numbers.Sqrt3By2
             );
             cam.transform.position = position;
