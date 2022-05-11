@@ -1,4 +1,6 @@
 using System.Collections;
+using Display.UI.Menu.Buttons;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 
@@ -6,8 +8,11 @@ namespace Display.UI.Menu
 {
     public class PointerController : MonoBehaviour
     {
+        public bool Dismissed { get; private set; }
+        [CanBeNull] public ButtonController CurrentButton { get; set; }
+        private const float AppearingDuration = 0.25f;
+        private const float AppearingIndent = 100f;
         private bool _coroutineIsExecuting;
-        private bool _dismissed;
         private float _normalX;
         private IEnumerator _executingCoroutine;
         private TextMeshProUGUI _mesh;
@@ -15,7 +20,7 @@ namespace Display.UI.Menu
         private void Start()
         {
             _mesh = GetComponent<TextMeshProUGUI>();
-            _dismissed = false;
+            Dismissed = false;
             _normalX = transform.localPosition.x;
         }
 
@@ -26,7 +31,7 @@ namespace Display.UI.Menu
                 StopCoroutine(_executingCoroutine);
             }
 
-            if (_dismissed)
+            if (Dismissed)
             {
                 AlignWithButton(button);
                 Appear();
@@ -45,7 +50,7 @@ namespace Display.UI.Menu
                 StopCoroutine(_executingCoroutine);
             }
 
-            _dismissed = true;
+            Dismissed = true;
             StartCoroutine(DisappearCoroutine());
         }
 
@@ -56,7 +61,7 @@ namespace Display.UI.Menu
                 StopCoroutine(_executingCoroutine);
             }
 
-            _dismissed = false;
+            Dismissed = false;
             StartCoroutine(AppearCoroutine());
         }
 
@@ -92,7 +97,7 @@ namespace Display.UI.Menu
             _coroutineIsExecuting = false;
         }
 
-        private IEnumerator DisappearCoroutine(float duration = 0.25f, float indent = 100f)
+        private IEnumerator DisappearCoroutine(float duration = AppearingDuration, float indent = AppearingIndent)
         {
             _coroutineIsExecuting = true;
 
@@ -118,7 +123,7 @@ namespace Display.UI.Menu
             _coroutineIsExecuting = false;
         }
 
-        private IEnumerator AppearCoroutine(float duration = 0.25f, float indent = 100f)
+        private IEnumerator AppearCoroutine(float duration = AppearingDuration, float indent = AppearingIndent)
         {
             _coroutineIsExecuting = true;
 

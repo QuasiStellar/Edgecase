@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 99010413}
   - component: {fileID: 99010415}
   - component: {fileID: 99010414}
+  - component: {fileID: 99010416}
   m_Layer: 5
   m_Name: SidePanel
   m_TagString: Untagged
@@ -201,6 +202,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99010412}
   m_CullTransparentMesh: 1
+--- !u!114 &99010416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99010412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d63b950976fe46e8864e6678a663a35a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &162731640
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,19 +635,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 734017082}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 734017080}
-        m_TargetAssemblyTypeName: Display.UI.Menu.ExitButtonController, Assembly-CSharp
-        m_MethodName: Press
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Exit()
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &734017080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -648,6 +649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointer: {fileID: 162731642}
+  sidePanel: {fileID: 99010416}
 --- !u!222 &734017081
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -944,8 +946,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointer: {fileID: 162731642}
-  mainMenu: {fileID: 1392760742}
-  settingsMenu: {fileID: 1243921111}
+  sidePanel: {fileID: 99010416}
+  mainMenu: {fileID: 1392760744}
+  settingsMenu: {fileID: 1243921113}
 --- !u!114 &1039998814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1078,19 +1081,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1039998814}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1039998813}
-        m_TargetAssemblyTypeName: Display.UI.Menu.SettingsButtonController, Assembly-CSharp
-        m_MethodName: Press
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!222 &1039998816
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1108,13 +1099,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1243921112}
+  - component: {fileID: 1243921113}
   m_Layer: 5
   m_Name: SettingsMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1243921112
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1133,9 +1125,23 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 430.19}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1243921113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243921111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddd70633ad824776a7f60bd58ec896f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sidePanel: {fileID: 99010416}
+  pointer: {fileID: 162731642}
 --- !u!1 &1392760742
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,6 +1151,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1392760743}
+  - component: {fileID: 1392760744}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -1174,6 +1181,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1392760744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1392760742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddd70633ad824776a7f60bd58ec896f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sidePanel: {fileID: 99010416}
+  pointer: {fileID: 162731642}
 --- !u!1 &1446083262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1226,6 +1247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointer: {fileID: 162731642}
+  sidePanel: {fileID: 99010416}
 --- !u!114 &1446083265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1358,19 +1380,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1446083265}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1446083264}
-        m_TargetAssemblyTypeName: Display.UI.Menu.PlayButtonController, Assembly-CSharp
-        m_MethodName: Press
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Exit()
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!222 &1446083267
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1393,7 +1403,7 @@ GameObject:
   - component: {fileID: 1755590884}
   - component: {fileID: 1755590883}
   m_Layer: 5
-  m_Name: ExitButton
+  m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1427,10 +1437,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1755590881}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39bbde3557b84fceb413e3f9a246cc51, type: 3}
+  m_Script: {fileID: 11500000, guid: 0b0aea59547f4325a0f535758985fa02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pointer: {fileID: 162731642}
+  sidePanel: {fileID: 99010416}
+  mainMenu: {fileID: 1392760744}
+  settingsMenu: {fileID: 1243921113}
 --- !u!114 &1755590884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1563,19 +1576,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1755590884}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1755590883}
-        m_TargetAssemblyTypeName: Display.UI.Menu.ExitButtonController, Assembly-CSharp
-        m_MethodName: Press
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Exit()
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!222 &1755590886
 CanvasRenderer:
   m_ObjectHideFlags: 0
