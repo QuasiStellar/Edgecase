@@ -181,7 +181,7 @@
                 {
                     "name": "",
                     "id": "7ce24884-f10d-4ccf-a67b-d94c1a13cbd4",
-                    "path": "<Keyboard>/upArrow",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -192,7 +192,7 @@
                 {
                     "name": "",
                     "id": "bf406ec6-8cc8-4178-8515-70f3dd95f8bb",
-                    "path": "<Keyboard>/downArrow",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
