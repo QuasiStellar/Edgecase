@@ -22,12 +22,33 @@ namespace Display.Cameras
         /// Speed of camera movement when control is held down.
         private const float FastMovementSpeed = 200f;
 
+        /// Distance from cursor to monitor edge for starting camera moving.
+        private const float DistanceFromCursorToWindowEdgeForStartingCameraMoving = 20f;
+
+        /// Camera zoom max limitation (less value = more zoom)
+        private const float MaxZoomLimit = 10f;
+
+        /// Touch and drag movement activator.
+        private const bool TouchAndDragMovementIsActive = true;
+
+        /// Movement camera by mouse closing to screen edge activator.
+        private const bool MovementCameraByMouseClosingToScreenEdgeIsActive = true;
+
         private Camera _camera;
+
         private bool _coroutineIsExecuting;
+
         private Vector3 _cameraForwardProjection;
         private Vector3 _cameraRightProjection;
+
         private const float CameraHeight = GameController.CameraHeight;
+
         private bool _cameraIsTop;
+        private float _movementSpeed;
+
+        private Vector2 _firstTouchPos;
+        private Vector3 _firstCamPos;
+        private bool _isFirstFrameOfTouching;
 
         private void Start()
         {
@@ -42,6 +63,8 @@ namespace Display.Cameras
             playerInput.actions["RotateCameraRight"].performed += _ => RotateCameraCounterclockwise();
             playerInput.actions["RotateCameraUp"].performed += _ => RotateCameraUp();
             playerInput.actions["RotateCameraDown"].performed += _ => RotateCameraDown();
+
+            playerInput.actions["ZoomCamera"].performed += _ => ZoomCamera();
         }
 
         private void Update()
@@ -51,10 +74,91 @@ namespace Display.Cameras
             var inputMoveVector = playerInput.actions["Move"].ReadValue<Vector2>();
 
             var fastMode = playerInput.actions["FastMode"].IsPressed();
-            var movementSpeed = fastMode ? FastMovementSpeed : MovementSpeed;
+            _movementSpeed = fastMode ? FastMovementSpeed : MovementSpeed;
 
-            transform.position += _cameraRightProjection * (movementSpeed * Time.deltaTime * inputMoveVector.x) +
-                                  _cameraForwardProjection * (movementSpeed * Time.deltaTime * inputMoveVector.y);
+            var movementVector = new Vector3(0, 0, 0);
+
+            if (MovementCameraByMouseClosingToScreenEdgeIsActive)
+            {
+                movementVector = MoveCameraByMouseClosingToWindowEdge();
+            }
+
+            movementVector += inputMoveVector.x * _cameraRightProjection + inputMoveVector.y * _cameraForwardProjection;
+            transform.position += Vector3.Normalize(movementVector) * (_movementSpeed * Time.deltaTime);
+
+            if (TouchAndDragMovementIsActive) MoveCameraByTouchAndDrag();
+        }
+
+        private void ZoomCamera()
+        {
+            var mouseScrollValue = -playerInput.actions["ZoomCamera"].ReadValue<Vector2>().y / 120f;
+            if (Math.Abs(mouseScrollValue) < 0.1f) return;
+            if (_camera.orthographicSize <= MaxZoomLimit && mouseScrollValue < 0) return;
+            _camera.orthographicSize += mouseScrollValue;
+        }
+
+        private void MoveCameraByTouchAndDrag()
+        {
+            if (!playerInput.actions["Click"].IsPressed())
+            {
+                _isFirstFrameOfTouching = true;
+                return;
+            }
+
+            if (_isFirstFrameOfTouching)
+            {
+                _firstTouchPos = Mouse.current.position.ReadValue();
+                _firstCamPos = transform.position;
+                _isFirstFrameOfTouching = false;
+                return;
+            }
+
+            float cameraSlopeCoefficient;
+            if (_cameraIsTop)
+            {
+                cameraSlopeCoefficient = 1;
+            }
+            else
+            {
+                cameraSlopeCoefficient = (float) Math.Cos(Math.PI / 6);
+            }
+
+            var mousePosDifferenceVector = Mouse.current.position.ReadValue() - _firstTouchPos;
+            var rightShiftCoefficient = _camera.orthographicSize * 2 * _camera.pixelWidth /
+                                        _camera.pixelHeight;
+            var rightShift = -mousePosDifferenceVector.x / _camera.pixelWidth * rightShiftCoefficient;
+            var forwardShiftCoefficient = _camera.orthographicSize * 2;
+            var forwardShift = -mousePosDifferenceVector.y / _camera.pixelHeight * forwardShiftCoefficient /
+                               cameraSlopeCoefficient;
+            var cameraPosShiftVector = _cameraRightProjection * rightShift + _cameraForwardProjection * forwardShift;
+            transform.position = _firstCamPos + cameraPosShiftVector;
+        }
+
+        private Vector3 MoveCameraByMouseClosingToWindowEdge()
+        {
+            var mousePos = Mouse.current.position.ReadValue();
+            var xMousePos = mousePos.x;
+            var yMousePos = mousePos.y;
+            var movementVector = new Vector3(0, 0, 0);
+            if (xMousePos < DistanceFromCursorToWindowEdgeForStartingCameraMoving)
+            {
+                movementVector += -_cameraRightProjection;
+            }
+            else if (xMousePos > _camera.pixelWidth - DistanceFromCursorToWindowEdgeForStartingCameraMoving)
+            {
+                movementVector += _cameraRightProjection;
+            }
+
+            if (yMousePos < DistanceFromCursorToWindowEdgeForStartingCameraMoving)
+            {
+                movementVector += -_cameraForwardProjection;
+            }
+            else if (yMousePos > _camera.pixelHeight - DistanceFromCursorToWindowEdgeForStartingCameraMoving)
+            {
+                movementVector += _cameraForwardProjection;
+            }
+
+            return Vector3.Normalize(movementVector);
         }
 
         private void RotateCameraClockwise()
