@@ -13,17 +13,12 @@ using Utils;
             _height = height;
         }
 
-        public HexMap<int> BuildHeightMap(int mapSize)
+        public HexMap<int> BuildHeightMap(ISet<HexPos> mapShape)
         {
             var mapContent = new Dictionary<HexPos, int>();
-            // TODO: Fix duplicate code
-            for (var aPos = 0; aPos < mapSize * 2 - 1; aPos++)
+            foreach (var hexPos in mapShape)
             {
-                for (var bPos = 0; bPos < mapSize * 2 - 1; bPos++)
-                {
-                    if (Math.Abs(aPos - bPos) >= mapSize) continue;
-                    mapContent[new HexPos(aPos, bPos)] = _height;
-                }
+                mapContent[hexPos] = _height;
             }
             return new HexMap<int>(mapContent);
         }

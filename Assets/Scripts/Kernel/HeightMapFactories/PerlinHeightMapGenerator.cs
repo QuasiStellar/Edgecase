@@ -32,30 +32,25 @@ namespace Kernel.HeightMapFactories
             _noiseShiftMax = 100000;
         }
 
-        public HexMap<int> BuildHeightMap(int mapSize)
+        public HexMap<int> BuildHeightMap(ISet<HexPos> mapShape)
         {
             var mapContent = new Dictionary<HexPos, int>();
             var noiseShift = Random.Range(_noiseShiftMin, _noiseShiftMax);
-            for (var i = 0; i < mapSize * 2 - 1; i++)
+            foreach (var hexPos in mapShape)
             {
-                for (var j = 0; j < mapSize * 2 - 1; j++)
-                {
-                    if (Math.Abs(i - j) >= mapSize) continue;
-                    var aPos = i - mapSize + 1;
-                    var bPos = j - mapSize + 1;
-                    var noiseValue = Mathf.PerlinNoise
-                    (
-                        aPos / _smoothness + noiseShift,
-                        bPos / _smoothness + noiseShift
-                    );
-                    var relativeHeight = (int)(_heightVariation * noiseValue);
-                    if (relativeHeight >= _heightVariation)
-                        relativeHeight = _heightVariation - 1;
-                    else if (relativeHeight < 0)
-                        relativeHeight = 0;
-                    var height = _minHeight + relativeHeight;
-                    mapContent[new HexPos(aPos + mapSize - 1, bPos + mapSize - 1)] = height;
-                }
+                var (aPos, bPos) = hexPos.ToCoords();
+                var noiseValue = Mathf.PerlinNoise
+                (
+                    aPos / _smoothness + noiseShift,
+                    bPos / _smoothness + noiseShift
+                );
+                var relativeHeight = (int)(_heightVariation * noiseValue);
+                if (relativeHeight >= _heightVariation)
+                    relativeHeight = _heightVariation - 1;
+                else if (relativeHeight < 0)
+                    relativeHeight = 0;
+                var height = _minHeight + relativeHeight;
+                mapContent[hexPos] = height;
             }
             return new HexMap<int>(mapContent);
         }
