@@ -11,8 +11,8 @@
 
             base.Press();
             pointer.Disappear();
-            mainMenu.MoveDown();
-            settingsMenu.MoveDown();
+            mainMenu.MoveRight();
+            settingsMenu.MoveLeft();
             return true;
         }
     }

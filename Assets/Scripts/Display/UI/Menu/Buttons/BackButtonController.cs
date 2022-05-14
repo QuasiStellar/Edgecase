@@ -10,8 +10,8 @@
             if (!base.Press()) return false;
 
             pointer.Disappear();
-            mainMenu.MoveUp();
-            settingsMenu.MoveUp();
+            mainMenu.MoveLeft();
+            settingsMenu.MoveRight();
             return true;
         }
     }

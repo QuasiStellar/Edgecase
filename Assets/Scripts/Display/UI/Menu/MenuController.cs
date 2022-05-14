@@ -11,17 +11,17 @@ namespace Display.UI.Menu
         public SidePanelController sidePanel;
         public PointerController pointer;
 
-        public void MoveDown()
+        public void MoveLeft()
         {
-            StartCoroutine(MoveCoroutine(-((RectTransform)transform).rect.height));
+            StartCoroutine(MoveCoroutine(-((RectTransform)transform).rect.width));
         }
 
-        public void MoveUp()
+        public void MoveRight()
         {
-            StartCoroutine(MoveCoroutine(((RectTransform)transform).rect.height));
+            StartCoroutine(MoveCoroutine(((RectTransform)transform).rect.width));
         }
 
-        private IEnumerator MoveCoroutine(float deltaY, float duration = TransitionDuration)
+        private IEnumerator MoveCoroutine(float deltaX, float duration = TransitionDuration)
         {
             sidePanel.Active = false;
             var elapsedTime = 0f;
@@ -31,8 +31,8 @@ namespace Display.UI.Menu
             {
                 transform.localPosition = new Vector2
                 (
-                    startingPosition.x,
-                    startingPosition.y + deltaY * Mathf.Pow(elapsedTime / duration, 2)
+                    startingPosition.x + deltaX * Mathf.Pow(elapsedTime / duration, 2),
+                    startingPosition.y
                 );
                 elapsedTime += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
@@ -40,8 +40,8 @@ namespace Display.UI.Menu
 
             transform.localPosition = new Vector2
             (
-                startingPosition.x,
-                startingPosition.y + deltaY
+                startingPosition.x + deltaX,
+                startingPosition.y
             );
             sidePanel.Active = true;
             pointer.CurrentButton?.AlignPointer();
