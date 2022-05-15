@@ -11,9 +11,9 @@ namespace Kernel.MapShapeFactories
 
         public HexagonalShapeFactory(int sideSize)
         {
-            if (sideSize < 0)
+            if (sideSize < 1)
             {
-                throw new ArgumentOutOfRangeException("sideSize should not be negative.");
+                throw new ArgumentOutOfRangeException("sideSize should be positive.");
             }
             _sideSize = sideSize;
         }
