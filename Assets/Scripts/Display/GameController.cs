@@ -1,4 +1,5 @@
 using Kernel.HeightMapFactories;
+using Kernel.MapShapeFactories;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
@@ -21,11 +22,14 @@ namespace Display
 
         private void Start()
         {
-            const float smoothness = 7f;
-            const int minHeight = 0;
-            const int heightVariation = 7;
-            var heightMapGenerator = new PerlinHeightMapFactory(smoothness, minHeight, heightVariation);
-            var heightMap = heightMapGenerator.BuildHeightMap(MapSize);
+            var mapShape = new HexagonalShapeFactory(MapSize).CreateShape();
+            var heightMapGenerator = new PerlinHeightMapFactory(
+                smoothness: 7f,
+                minHeight: 0,
+                heightVariation: 7
+            );
+            var heightMap = heightMapGenerator.BuildHeightMap(mapShape);
+
             _hexBoard = new HexBoard(
                 MapSize,
                 heightMap,

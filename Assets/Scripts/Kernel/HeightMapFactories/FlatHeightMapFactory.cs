@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Utils;
 
 namespace Kernel.HeightMapFactories
@@ -12,19 +13,14 @@ namespace Kernel.HeightMapFactories
             _height = height;
         }
 
-        public HexMap<int> BuildHeightMap(int mapSize)
+        public HexMap<int> BuildHeightMap(ISet<HexPos> mapShape)
         {
-            var map = new HexMap<int>(mapSize);
-            // TODO: Fix duplicate code
-            for (var aPos = 0; aPos < mapSize * 2 - 1; aPos++)
+            var mapContent = new Dictionary<HexPos, int>();
+            foreach (var hexPos in mapShape)
             {
-                for (var bPos = 0; bPos < mapSize * 2 - 1; bPos++)
-                {
-                    if (Math.Abs(aPos - bPos) >= mapSize) continue;
-                    map[new HexPos(aPos, bPos)] = _height;
-                }
+                mapContent[hexPos] = _height;
             }
-            return map;
+            return new HexMap<int>(mapContent);
         }
     }
 }
