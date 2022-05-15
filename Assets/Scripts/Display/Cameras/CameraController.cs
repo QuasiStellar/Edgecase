@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,16 +26,22 @@ namespace Display.Cameras
         private bool _coroutineIsExecuting;
         private Vector3 _cameraForwardProjection;
         private Vector3 _cameraRightProjection;
+        private const float CameraHeight = GameController.CameraHeight;
+        private bool _cameraIsTop;
 
         private void Start()
         {
             _camera = GetComponent<Camera>();
 
-            _cameraForwardProjection = GetForwardProjectionAndNormalizeIt();
+            var forwardProjection = transform.forward;
+            forwardProjection.y = 0;
+            _cameraForwardProjection = Vector3.Normalize(forwardProjection);
             _cameraRightProjection = transform.right;
 
             playerInput.actions["RotateCameraLeft"].performed += _ => RotateCameraClockwise();
             playerInput.actions["RotateCameraRight"].performed += _ => RotateCameraCounterclockwise();
+            playerInput.actions["RotateCameraUp"].performed += _ => RotateCameraUp();
+            playerInput.actions["RotateCameraDown"].performed += _ => RotateCameraDown();
         }
 
         private void Update()
@@ -54,7 +61,7 @@ namespace Display.Cameras
         {
             if (!_coroutineIsExecuting)
             {
-                StartCoroutine(RotateCamera(-60, 1));
+                StartCoroutine(RotateCameraSidewaysCoroutine(-60, 1));
             }
         }
 
@@ -62,11 +69,84 @@ namespace Display.Cameras
         {
             if (!_coroutineIsExecuting)
             {
-                StartCoroutine(RotateCamera(60, 1));
+                StartCoroutine(RotateCameraSidewaysCoroutine(60, 1));
             }
         }
 
-        private IEnumerator RotateCamera(float angle, float duration)
+        private void RotateCameraUp()
+        {
+            if (_coroutineIsExecuting || _cameraIsTop) return;
+            StartCoroutine(RotateCameraUpCoroutine(1));
+            _cameraIsTop = true;
+        }
+
+        private void RotateCameraDown()
+        {
+            if (_coroutineIsExecuting || !_cameraIsTop) return;
+            StartCoroutine(RotateCameraDownCoroutine(1));
+            _cameraIsTop = false;
+        }
+
+        private IEnumerator RotateCameraUpCoroutine(float duration)
+        {
+            _coroutineIsExecuting = true;
+
+            var fulcrum = GetMousePointedRayHit();
+            var t = transform;
+            var startPos = t.position;
+            var finishPos = fulcrum;
+            finishPos.y = CameraHeight;
+            var fullShift = finishPos - startPos;
+            var rotation = t.eulerAngles;
+            var startCameraSlope = rotation.x;
+
+            var elapsedTime = 0f;
+            while (elapsedTime < duration)
+            {
+                MoveTowards(fullShift * elapsedTime / duration, startPos,
+                    startCameraSlope + 30 * elapsedTime / duration);
+                elapsedTime += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+
+            MoveTowards(fullShift, startPos,
+                startCameraSlope + 30);
+
+            _coroutineIsExecuting = false;
+        }
+
+        private IEnumerator RotateCameraDownCoroutine(float duration)
+        {
+            _coroutineIsExecuting = true;
+
+            var startPos = transform.position;
+            var ray = _camera.ScreenPointToRay(new Vector3(_camera.pixelWidth / 2f, _camera.pixelHeight / 2f,
+                0));
+            Physics.Raycast(ray, out var hit);
+            var fulcrum = hit.point;
+            var rotationVector = startPos - fulcrum;
+            var height = rotationVector.y;
+            rotationVector = Quaternion.AngleAxis(-30, _cameraRightProjection) * rotationVector;
+            rotationVector = Vector3.Normalize(rotationVector) * (float) (height / Math.Sin(Math.PI / 3));
+            var finishPos = fulcrum + rotationVector;
+            var fullShift = finishPos - startPos;
+
+            var elapsedTime = 0f;
+            while (elapsedTime < duration)
+            {
+                MoveTowards(fullShift * elapsedTime / duration, startPos,
+                    90 - 30 * elapsedTime / duration);
+                elapsedTime += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+
+            MoveTowards(fullShift, startPos,
+                60);
+
+            _coroutineIsExecuting = false;
+        }
+
+        private IEnumerator RotateCameraSidewaysCoroutine(float angle, float duration)
         {
             _coroutineIsExecuting = true;
 
@@ -74,9 +154,7 @@ namespace Display.Cameras
             var t = transform;
             var (startPosition, startRotation) = (t.position, t.eulerAngles);
 
-            var ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-            Physics.Raycast(ray, out var hit);
-            var fulcrum = hit.point;
+            Vector3 fulcrum = GetMousePointedRayHit();
 
             while (elapsedTime < duration)
             {
@@ -87,7 +165,7 @@ namespace Display.Cameras
 
             RotateAroundVector(angle, fulcrum, startPosition, startRotation);
 
-            _cameraForwardProjection = GetForwardProjectionAndNormalizeIt();
+            _cameraForwardProjection = Quaternion.AngleAxis(angle, Vector3.up) * _cameraForwardProjection;
             _cameraRightProjection = transform.right;
             _coroutineIsExecuting = false;
         }
@@ -106,11 +184,22 @@ namespace Display.Cameras
             transform.rotation = Quaternion.Euler(startRotation);
         }
 
-        private Vector3 GetForwardProjectionAndNormalizeIt()
+        private void MoveTowards(Vector3 shiftFromStartPosition,
+            Vector3 startPosition,
+            float cameraSlope)
         {
-            var forwardProjection = transform.forward;
-            forwardProjection.y = 0;
-            return Vector3.Normalize(forwardProjection);
+            var rotation = transform.eulerAngles;
+            rotation.x = cameraSlope;
+            Transform t;
+            (t = transform).rotation = Quaternion.Euler(rotation);
+            t.position = startPosition + shiftFromStartPosition;
+        }
+
+        private Vector3 GetMousePointedRayHit()
+        {
+            var ray = _camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+            Physics.Raycast(ray, out var hit);
+            return hit.point;
         }
     }
 }

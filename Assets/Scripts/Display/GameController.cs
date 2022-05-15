@@ -14,6 +14,7 @@ namespace Display
         public Camera cam;
         public Camera debugCam;
         public PlayerInput playerInput;
+        public const float CameraHeight = MapSize * GameScale * Numbers.Sqrt3X2;
 
         public Material hexMaterial;
 
@@ -21,12 +22,14 @@ namespace Display
 
         private void Start()
         {
-            var smoothness = 7f;
-            var minHeight = 0;
-            var heightVariation = 7;
             var mapShape = new HexagonalShapeFactory(MapSize).CreateShape();
-            var heightMapGenerator = new PerlinHeightMapGenerator(smoothness, minHeight, heightVariation);
+            var heightMapGenerator = new PerlinHeightMapFactory(
+                smoothness: 7f,
+                minHeight: 0,
+                heightVariation: 7
+            );
             var heightMap = heightMapGenerator.BuildHeightMap(mapShape);
+
             _hexBoard = new HexBoard(
                 MapSize,
                 heightMap,
@@ -38,7 +41,7 @@ namespace Display
 
             var position = new Vector3(
                 -MapSize * GameScale * 0.5f,
-                MapSize * GameScale * Numbers.Sqrt3X2,
+                CameraHeight,
                 -MapSize * GameScale * Numbers.Sqrt3By2
             );
             cam.transform.position = position;
