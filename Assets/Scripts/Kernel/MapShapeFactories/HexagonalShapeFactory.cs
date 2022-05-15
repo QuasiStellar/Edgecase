@@ -18,7 +18,7 @@ namespace Kernel.MapShapeFactories
             _sideSize = sideSize;
         }
 
-        public HashSet<HexPos> Build()
+        public HashSet<HexPos> CreateShape()
         {
             var shape = new HashSet<HexPos>();
             foreach (var aPos in Enumerable.Range(0, _sideSize * 2 - 1))
