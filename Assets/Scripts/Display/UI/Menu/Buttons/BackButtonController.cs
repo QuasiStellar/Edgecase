@@ -2,16 +2,18 @@
 {
     public class BackButtonController : ButtonController
     {
-        public MenuController mainMenu;
-        public MenuController settingsMenu;
-
         protected override bool Press()
         {
             if (!base.Press()) return false;
 
             pointer.Disappear();
-            mainMenu.MoveLeft();
-            settingsMenu.MoveRight();
+
+            sidePanel.lastActiveController.MoveLeft();
+            sidePanel.activeController.MoveRight();
+
+            (sidePanel.lastActiveController, sidePanel.activeController)
+                = (sidePanel.activeController, sidePanel.lastActiveController);
+
             return true;
         }
     }

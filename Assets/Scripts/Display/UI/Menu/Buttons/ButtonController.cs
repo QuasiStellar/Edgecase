@@ -21,7 +21,7 @@ namespace Display.UI.Menu.Buttons
 
         void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
         {
-            if (!sidePanel.Active) return;
+            if (!sidePanel.active) return;
 
             _pressing = true;
             TurnOnGlow();
@@ -36,7 +36,7 @@ namespace Display.UI.Menu.Buttons
         void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
         {
             pointer.CurrentButton = this;
-            if (!sidePanel.Active) return;
+            if (!sidePanel.active) return;
 
             MovePointer();
             if (_pressing)
@@ -83,7 +83,7 @@ namespace Display.UI.Menu.Buttons
 
         protected virtual bool Press()
         {
-            return sidePanel.Active;
+            return sidePanel.active;
         }
     }
 }
