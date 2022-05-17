@@ -13,6 +13,7 @@ namespace Display.UI.Menu
         private const float AppearingDuration = 0.25f;
         private const float AppearingIndent = 100f;
         private bool _coroutineIsExecuting;
+        private bool _movingHorizontally;
         private float _normalX;
         private IEnumerator _executingCoroutine;
         private TextMeshProUGUI _mesh;
@@ -26,10 +27,9 @@ namespace Display.UI.Menu
 
         public void MoveTowardsButton(GameObject button, float duration)
         {
-            if (_coroutineIsExecuting)
-            {
-                StopCoroutine(_executingCoroutine);
-            }
+            if (_movingHorizontally) { return; }
+
+            if (_coroutineIsExecuting) { StopCoroutine(_executingCoroutine); }
 
             if (Dismissed)
             {
@@ -45,10 +45,7 @@ namespace Display.UI.Menu
 
         public void Disappear()
         {
-            if (_coroutineIsExecuting)
-            {
-                StopCoroutine(_executingCoroutine);
-            }
+            if (_coroutineIsExecuting) { StopCoroutine(_executingCoroutine); }
 
             Dismissed = true;
             StartCoroutine(DisappearCoroutine());
@@ -56,10 +53,7 @@ namespace Display.UI.Menu
 
         private void Appear()
         {
-            if (_coroutineIsExecuting)
-            {
-                StopCoroutine(_executingCoroutine);
-            }
+            if (_coroutineIsExecuting) { StopCoroutine(_executingCoroutine); }
 
             Dismissed = false;
             StartCoroutine(AppearCoroutine());
@@ -82,8 +76,7 @@ namespace Display.UI.Menu
             var elapsedTime = 0f;
             while (elapsedTime < duration)
             {
-                transform.localPosition = new Vector3
-                (
+                transform.localPosition = new Vector3(
                     position.x,
                     currentY + (targetY - currentY) * Mathf.Pow(elapsedTime / duration, 2),
                     position.z
@@ -100,14 +93,14 @@ namespace Display.UI.Menu
         private IEnumerator DisappearCoroutine(float duration = AppearingDuration, float indent = AppearingIndent)
         {
             _coroutineIsExecuting = true;
+            _movingHorizontally = true;
 
             var position = transform.localPosition;
             var currentX = position.x;
             var elapsedTime = 0f;
             while (elapsedTime < duration)
             {
-                transform.localPosition = new Vector3
-                (
+                transform.localPosition = new Vector3(
                     currentX - indent * Mathf.Pow(elapsedTime / duration, 2),
                     position.y,
                     position.z
@@ -121,11 +114,13 @@ namespace Display.UI.Menu
             _mesh.color = new Color32(255, 255, 255, 0);
 
             _coroutineIsExecuting = false;
+            _movingHorizontally = false;
         }
 
         private IEnumerator AppearCoroutine(float duration = AppearingDuration, float indent = AppearingIndent)
         {
             _coroutineIsExecuting = true;
+            _movingHorizontally = true;
 
             var t = transform;
             var localPosition = t.localPosition;
@@ -136,8 +131,7 @@ namespace Display.UI.Menu
             var elapsedTime = 0f;
             while (elapsedTime < duration)
             {
-                transform.localPosition = new Vector3
-                (
+                transform.localPosition = new Vector3(
                     currentX + indent * (1 - Mathf.Pow(1 - elapsedTime / duration, 2)),
                     position.y,
                     position.z
@@ -151,6 +145,7 @@ namespace Display.UI.Menu
             _mesh.color = new Color32(255, 255, 255, 255);
 
             _coroutineIsExecuting = false;
+            _movingHorizontally = false;
         }
     }
 }

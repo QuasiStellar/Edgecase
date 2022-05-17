@@ -23,7 +23,7 @@ namespace Display.UI.Menu
 
         private IEnumerator MoveCoroutine(float deltaX, float duration = TransitionDuration)
         {
-            sidePanel.Active = false;
+            sidePanel.active = false;
             var elapsedTime = 0f;
             var startingPosition = transform.localPosition;
 
@@ -43,7 +43,7 @@ namespace Display.UI.Menu
                 startingPosition.x + deltaX,
                 startingPosition.y
             );
-            sidePanel.Active = true;
+            sidePanel.active = true;
             pointer.CurrentButton?.AlignPointer();
         }
     }

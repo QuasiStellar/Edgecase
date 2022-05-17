@@ -2,7 +2,6 @@
 {
     public class SettingsButtonController : ButtonController
     {
-        public MenuController mainMenu;
         public MenuController settingsMenu;
 
         protected override bool Press()
@@ -10,9 +9,15 @@
             if (!base.Press()) return false;
 
             base.Press();
+
             pointer.Disappear();
-            mainMenu.MoveRight();
+
+            sidePanel.activeController.MoveRight();
             settingsMenu.MoveLeft();
+
+            sidePanel.lastActiveController = sidePanel.activeController;
+            sidePanel.activeController = settingsMenu;
+
             return true;
         }
     }
